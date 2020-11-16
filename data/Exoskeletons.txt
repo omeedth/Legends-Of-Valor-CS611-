@@ -1,0 +1,12 @@
+Cyrrollalee     7       700        800     75
+Brandobaris     3       350        450     30
+BigBad-Wolf     1       150        250     15
+WickedWitch     2       250        350     25
+Aasterinian     4       400        500     45
+Chronepsish     6       650        750     60
+Kiaransalee     8       850        950     85
+St-Shargaas     5       550        650     55
+Merrshaullk     10      1000       900     55
+St-Yeenoghu     9       950        850     90
+DocOck          6       600        600     55
+Exodia          10      1000       1000    50

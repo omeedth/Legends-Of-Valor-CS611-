@@ -1,0 +1,6 @@
+Solonor_Thelandira   300     750     650     700     2500    7
+Sehanine_Moonbow     300     750     700     700     2500    7
+Skoraeus_Stonebone  250     650     600     350     2500    4
+Garl_Glittergold     100     600     500     400     2500    5
+Amaryllis_Astra      500     500     500     500     2500    5
+Caliber_Heist        400     400     400     400     2500    8
