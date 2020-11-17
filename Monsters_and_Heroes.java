@@ -31,9 +31,14 @@ public class Monsters_and_Heroes{
         LegendMarket market = new LegendMarket(weapons, armors, potions,spells);
         HeroCollect heroCollect = new HeroCollect(warList, socList, paList);
         MonsterCollect monsterCollect = new MonsterCollect(draList, exoList, spiList);
-        LegendWorld world = new LegendWorld();
-        LegendGame game = new LegendGame(world, heroCollect, monsterCollect, market);
-        game.world.generate();
+
+        /* Have to use the Board Class instead of World */
+        // LegendWorld world = new LegendWorld();
+        // LegendGame game = new LegendGame(world, heroCollect, monsterCollect, market);
+        // game.world.generate();
+        Board board = new Board(LegendGame.BOARD_DIMENSIONS);
+        LegendGame game = new LegendGame(board, heroCollect, monsterCollect, market);
+        /*----------------------------------------------*/
         System.out.println("Load finish.");
         System.out.println();
         

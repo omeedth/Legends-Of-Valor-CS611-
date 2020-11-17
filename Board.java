@@ -57,6 +57,31 @@ public class Board {
         return get(cartesianCoords.getX(),cartesianCoords.getY());
     }
 
+    /* Aliases for "get()" methods so it works with preexisting code */
+
+    public Tile getTile(int x, int y) {
+        return get(x,y);
+    }
+
+    public Tile getTile(Coordinate2D cartesianCoords) {
+        return get(cartesianCoords);
+    }
+
+    /*---------------------------------------------------------------*/
+
+    /* Methods so it works with preexisting code */
+
+    public boolean isOccupied(int x, int y) {
+        assert (x >= 0 && x < this.getWidth()) && (y >= 0 && y < this.getHeight());
+        return !get(x,y).isEmpty();
+    }
+
+    public boolean isOccupied(Coordinate2D cartesianCoords) {
+        return isOccupied(cartesianCoords.getX(),cartesianCoords.getY());
+    }
+
+    /*-------------------------------------------*/
+
     public Coordinate2D cartesianCoordinatesToComputerCoordinates(Coordinate2D cartesianCoords) {
         return new Coordinate2D(cartesianCoords.getX(),cartesianYToComputerY(cartesianCoords.getY()));
     }
@@ -206,6 +231,11 @@ public class Board {
     // Tile within the board
     public List<Tile> getNeighbors(Tile tile) {
         return getNeighbors(tile.getCoords());
+    }
+
+    /* Named displayMap so it fits with the preexisting code */
+    public void displayMap() {
+        System.out.println(this.toString());
     }
 
     @Override

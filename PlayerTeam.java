@@ -9,6 +9,7 @@ import java.util.*;
 
 public class PlayerTeam extends Team{
     
+    /* Change to Coordinate2D Please */
     protected int xPos;
     protected int yPos;
     
@@ -64,6 +65,14 @@ public class PlayerTeam extends Team{
             }
         }
     }
+
+    /* MODIFIED - Code so that my (Alex) code works */
+
+    public Coordinate2D getCoords() {
+        return new Coordinate2D(this.xPos, this.yPos);
+    }
+
+    /*----------------------------------------------*/
     
     /** regain Some HP and MP for alive heroes */
     public void regain(){
@@ -147,5 +156,17 @@ public class PlayerTeam extends Team{
             }
         }
         return true;
+    }
+
+    @Override
+    public char represent() {
+        // TODO Auto-generated method stub
+        return 'P';
+    }
+
+    @Override
+    public void move(Tile destination) {
+        // TODO Auto-generated method stub
+        System.out.println("Player Team Moving...");
     }
 }

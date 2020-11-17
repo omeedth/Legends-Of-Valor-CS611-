@@ -9,6 +9,11 @@ import java.util.*;
 
 public class LegendGame extends RpgGame{
 
+    /* public static Variables */
+    public static final int BOARD_DIMENSIONS = 8;
+
+    /* Data Members */
+
     protected HeroCollect heroList;
     protected MonsterCollect monsterList;
     
@@ -22,7 +27,7 @@ public class LegendGame extends RpgGame{
     }
     
     /* Default constructor */
-    LegendGame(LegendWorld world, HeroCollect heroList, MonsterCollect monsterList, LegendMarket market){
+    LegendGame(Board world, HeroCollect heroList, MonsterCollect monsterList, LegendMarket market){
         super(world);
         this.heroList = heroList;
         this.monsterList = monsterList;
@@ -119,7 +124,8 @@ public class LegendGame extends RpgGame{
         // Get curret pos of the team
         int teamX = this.team.getXPos();
         int teamY = this.team.getYPos();
-        String eSign = this.world.getTile(teamX,teamY);
+        Tile destTile = this.world.getTile(teamX,teamY); // Modified
+        String eSign = destTile.toString();
         // If current tile is a Market, trade
         if(eSign.equals("\u001B[34mM\u001B[0m")){
             System.out.println();
@@ -141,7 +147,9 @@ public class LegendGame extends RpgGame{
             }
         }
         // Update change to the world
-        this.world.updateTeamPos(this.team.getXPos(),this.team.getYPos());
+        // this.world.updateTeamPos(this.team.getXPos(),this.team.getYPos());
+        Tile source = new CommonTile(new Coordinate2D());
+        this.world.movePiece(this.team, source, destTile);
     }
     
     /** Trade in market */
@@ -344,4 +352,102 @@ public class LegendGame extends RpgGame{
             }
         }while(loop);
     }
+
+    /* Generate Tile ID Matrix */
+    // TODO: Generate 3 Lanes (Top, Mid, and Bot) where each lane has randomly
+    //       assigned Tiles
+    //       NOTE: The first row is the Monster's Nexus, The last row is the Hero's Nexus,
+    //             and there are inaccessible tiles in between each lane
+    public int[][] generateTileIdMatrix() {
+
+        // Variables for the matrix of tileIds
+        int w = this.world.getWidth();
+        int h = this.world.getHeight();
+        int[][] tileIds = new int[w][h];
+
+        // Make mapping of probabilities for possible tiles
+        ArrayList<Float> probabilities = new ArrayList<Float>();
+        probabilities.add(0.5f);
+        probabilities.add(0.2f);
+        probabilities.add(0.3f);
+
+        // Choosing the tile Ids to place in the specific cell
+        for (int row = 0; row < w; row++) {
+            for (int col = 0; col < h; col++) {
+
+                // Variables for choosing the random tile type
+                float rand = (float) Math.random();
+                float currProbabilityThreshold = 0;
+                int id = -1;
+
+                // Figuring out the tile to place
+                for (int i = 0; i < probabilities.size(); i++) {
+                    currProbabilityThreshold += probabilities.get(i);
+                    if (rand <= currProbabilityThreshold) {
+                        id = i;
+                        break;
+                    }
+                }
+
+                // Default tile if none chosen
+                if (id == -1) {
+                    id = probabilities.size() - 1;
+                }
+
+                // Assigning the tileId
+                tileIds[row][col] = id;
+                
+            }
+        }
+
+        return tileIds;
+    }
+
+    private boolean validMove(String directionCharacter) {
+        String standardDirectionChar = directionCharacter.toLowerCase();
+        boolean result = false;
+
+        Coordinate2D currentCoords = this.team.getCoords();
+        Tile currTile = this.world.get(currentCoords);
+        Coordinate2D destination = null;
+        Tile destinationTile = null;
+
+        if (standardDirectionChar.equals("w")) {
+            // Go up
+            destination = new Coordinate2D(currentCoords.getX(),currentCoords.getY() + 1);
+        }
+        
+        else if (standardDirectionChar.equals("a")) {
+            // Go left
+            destination = new Coordinate2D(currentCoords.getX() - 1,currentCoords.getY());
+        }
+
+        else if (standardDirectionChar.equals("s")) {
+            // Go down
+            destination = new Coordinate2D(currentCoords.getX(),currentCoords.getY() - 1);
+        }
+
+        else if (standardDirectionChar.equals("d")) {
+            // Go right
+            destination = new Coordinate2D(currentCoords.getX() + 1,currentCoords.getY());
+        }
+
+        // Check if destination it inside the board
+        if (!this.world.insideBoard(destination))  {
+            return false;
+        }
+
+        // Get the tile specified by the destination coordinates
+        destinationTile = this.world.get(destination);
+
+        // Generate Blacklisted tiles (Inaccessible Tiles) TODO: Optimize! I don't need to create this everytime for the game
+        Set<Class<? extends Tile>> blackList = new HashSet<>();
+        blackList.add(InaccessibleTile.class);
+
+        // Find result
+        result = !blackList.contains(destinationTile.getClass());
+
+        return result;
+    }
+
 }

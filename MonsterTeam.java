@@ -61,4 +61,16 @@ public class MonsterTeam extends Team{
         }
         return true;
     }
+
+    @Override
+    public char represent() {
+        // TODO Auto-generated method stub
+        return 'M';
+    }
+
+    @Override
+    public void move(Tile destination) {
+        // TODO Auto-generated method stub
+        System.out.println("Monster Team Moving...");
+    }
 }

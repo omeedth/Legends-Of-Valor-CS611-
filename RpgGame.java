@@ -9,14 +9,14 @@ import java.util.*;
 
 public abstract class RpgGame extends Game{
     
-    protected LegendWorld world;
+    protected Board world;
 
    /* Default constructor */
     RpgGame(){
     }
     
    /* User defined constructor */
-    RpgGame(LegendWorld world){
+    RpgGame(Board world){
         this.world = world;
     }
     
@@ -28,6 +28,6 @@ public abstract class RpgGame extends Game{
     
     /** Display the world map **/
     public void displayMap(){
-        this.world.displayMap();
+        this.world.displayMap();        
     }
 }

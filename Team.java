@@ -7,7 +7,7 @@
 
 import java.util.*;
 
-public abstract class Team{
+public abstract class Team implements TileRepresentable {
     
     protected ArrayList<Character> members;
     
