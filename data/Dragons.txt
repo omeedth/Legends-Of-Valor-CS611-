@@ -1,0 +1,12 @@
+Desghidorrah	 3       300       400     35
+Chrysophylax     2       200       500     20
+BunsenBurner	 4       400       500     45
+Natsunomeryu 	 1       100       200     10
+TheScaleless	 7       700       600     75
+Kas-Ethelinh     5       600       500     60
+Alexstraszan	 10      1000      9000    55
+Phaarthurnax	 6       600       700     60
+D-Maleficent	 9       900       950     85
+TheWeatherbe 	 8       800       900     80
+Igneel           6       600       400     60
+BlueEyesWhite    9       900       600     75

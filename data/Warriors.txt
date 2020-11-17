@@ -1,0 +1,5 @@
+Gaerdal_Ironhand   100     700     500     600     1354    7
+Sehanine_Monnbow   600     700     800     500     2500    8
+Muamman_Duathall   300     900     500     750     2546    6
+Flandal_Steelskin  200     750     650     700     2500    7
+Undefeated_Yoj     400     800     400     700     2500    7
