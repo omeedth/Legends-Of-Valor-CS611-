@@ -1,5 +1,3 @@
-package tiles;
-
 /*
  *  Author: Alex Thomas
  *  Creation Date: 11/8/2020

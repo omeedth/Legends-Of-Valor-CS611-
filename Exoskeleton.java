@@ -1,6 +1,5 @@
 /**
- * @author:Zhuyun Chen
- * Class represent a Exoskeleton
+ * @author:Zhuyun Chen Class represent a Exoskeleton
  */
 
 public class Exoskeleton extends Monster{

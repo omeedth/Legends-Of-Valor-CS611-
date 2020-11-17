@@ -1,8 +1,6 @@
 /**
- * @author:Zhuyun Chen
- * date: 11/08/2020
- * Class represent a Battle character
- * Subclass of Character
+ * @author:Zhuyun Chen date: 11/08/2020 Class represent a Battle character
+ *                Subclass of Character
  */
 
 public abstract class BattleCharacter extends Character{

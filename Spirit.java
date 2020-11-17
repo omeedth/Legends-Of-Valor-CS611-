@@ -1,6 +1,5 @@
 /**
- * @author:Zhuyun Chen
- * Class represent a Spirit
+ * @author:Zhuyun Chen Class represent a Spirit
  */
 
 public class Spirit extends Monster{

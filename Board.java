@@ -1,5 +1,3 @@
-package tiles;
-
 /*
  *  Author: Alex Thomas
  *  Creation Date: 10/29/2020
@@ -105,6 +103,17 @@ public class Board {
         else {
             return false;
         }
+    }
+
+    // TODO: retrieve the nexus tile for the Heroes
+    //       1. Check if the nexus tile is empty
+    //       2. Check if this nexus is the same lane as the hero
+    public void getHeroNexus(Hero hero) {
+        /*
+         * Given the Hero object (Contains Coordinate2D)
+         * So figure out Nexus Tile on the lane
+         */
+        
     }
 
     /* Logic Methods */

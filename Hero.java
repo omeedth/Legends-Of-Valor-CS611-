@@ -7,7 +7,7 @@
   
 import java.util.*;
 
-public class Hero extends BattleCharacter{
+public class Hero extends BattleCharacter implements TileRepresentable {
 
     protected int exp;
     protected double coins;
@@ -508,5 +508,17 @@ public class Hero extends BattleCharacter{
         }else{
             System.out.print(this.weapon.getName()+"  \t"+this.armor.getName());
         }
+    }
+
+    @Override
+    public char represent() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void move(Tile destination) {
+        // TODO Auto-generated method stub
+        
     }
 }

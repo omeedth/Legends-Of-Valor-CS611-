@@ -1,7 +1,5 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent a Lightning Spell
+ * @author: Zhuyun Chen date: 11/08/20 Class represent a Lightning Spell
  **/
 
 public class LightningSpell extends Spell{

@@ -1,9 +1,11 @@
+
 /**
  * @author: Zhuyun Chen
  * date: 11/08/20
  * Class to store Hero datas in game
  **/
 
+ /* External Imports */
 import java.util.*;
 
 public class HeroCollect{

@@ -1,6 +1,5 @@
 /**
- * @author:Zhuyun Chen
- * Class represent a Warrior
+ * @author:Zhuyun Chen Class represent a Warrior
  **/
 
 public class Sorcerer extends Hero{

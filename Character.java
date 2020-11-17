@@ -1,8 +1,6 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent a Charactor in general
- * Superclass of Hero and Monster
+ * @author: Zhuyun Chen date: 11/08/20 Class represent a Charactor in general
+ *          Superclass of Hero and Monster
  **/
 
 public abstract class Character{

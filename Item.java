@@ -1,7 +1,5 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent an Item in general
+ * @author: Zhuyun Chen date: 11/08/20 Class represent an Item in general
  **/
 
 public abstract class Item{

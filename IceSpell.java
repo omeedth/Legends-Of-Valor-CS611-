@@ -1,7 +1,5 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent an Ice Spell
+ * @author: Zhuyun Chen date: 11/08/20 Class represent an Ice Spell
  **/
 
 public class IceSpell extends Spell{

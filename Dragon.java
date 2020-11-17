@@ -1,6 +1,5 @@
 /**
- * @author:Zhuyun Chen
- * Class represent a Dragon
+ * @author:Zhuyun Chen Class represent a Dragon
  */
 
 public class Dragon extends Monster{

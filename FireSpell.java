@@ -1,7 +1,5 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent an Fire Spell
+ * @author: Zhuyun Chen date: 11/08/20 Class represent an Fire Spell
  **/
 
 public class FireSpell extends Spell{

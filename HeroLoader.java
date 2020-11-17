@@ -1,12 +1,16 @@
+
 /**
  * @author: Zhuyun Chen
  * date: 11/08/20
  * Class to load Heroes
  **/
 
+/* External Imports */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+
+/* Internal Imports */
 
 public class HeroLoader {
     

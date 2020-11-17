@@ -1,8 +1,6 @@
 /**
- * @author: Zhuyun Chen
- * date: 11/08/20
- * Class represent an RpgItem in general
- * Superclass of Weapon/Armor/Spell/Potion
+ * @author: Zhuyun Chen date: 11/08/20 Class represent an RpgItem in general
+ *          Superclass of Weapon/Armor/Spell/Potion
  **/
 
 public abstract class RpgItem extends Item{
