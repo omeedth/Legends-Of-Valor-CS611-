@@ -510,15 +510,5 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         }
     }
 
-    @Override
-    public char represent() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public void move(Tile destination) {
-        // TODO Auto-generated method stub
-        
-    }
+    public char represent() {return 'H';}
 }

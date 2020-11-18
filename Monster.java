@@ -63,4 +63,6 @@ public abstract class Monster extends BattleCharacter{
     public void display(){
         System.out.println(this.level+"  "+this.name+"\t"+this.HP+"  "+this.defense+"  "+this.baseDamage);
     }
+    
+    public char represent(){ return 'M';}
 }
