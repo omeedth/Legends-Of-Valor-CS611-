@@ -3,14 +3,14 @@
  *                Subclass of Character
  */
 
-public abstract class BattleCharacter extends Character{
+public abstract class BattleCharacter extends Character {
 
     protected double HP;
     protected int level;
     protected double defense;
    
     /** Default constructor */
-    BattleCharacter(){
+    BattleCharacter() {
         super();
         this.level = 1;
         this.HP = this.level*100;
@@ -18,8 +18,18 @@ public abstract class BattleCharacter extends Character{
     }
    
     /** User defined constructor */
-    BattleCharacter(String name, int level, double defense){
-        super(name);
+    // TODO: Either remove this constructor OR add constructor in Character Class with just (String name) as a parameter
+    BattleCharacter(String name, int level, double defense) {
+        super();
+        // super(name); // Must pass in Coordinate2D as well
+        this.level = level;
+        this.HP = level*100;
+        this.defense = defense;
+    }
+
+    /** User defined constructor */
+    BattleCharacter(String name, Coordinate2D coords, int level, double defense) {
+        super(name,coords);
         this.level = level;
         this.HP = level*100;
         this.defense = defense;

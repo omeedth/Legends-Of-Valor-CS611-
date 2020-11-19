@@ -206,6 +206,13 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     protected boolean dodge(){
         return Math.random() < this.agi*0.002;
     }
+
+    /** Take an action in battle
+     * @param Monaster, the monster to do the action on
+     */
+    public void action(Monster monster) {
+        // TODO: Implement (This is necessary because in the PlayerTeam Class hero.action(Monster m) was called but that method didn't exist)
+    }
     
     /** Take an action in battle
      * @param Board, the whole board for gaming
@@ -267,11 +274,13 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                     changeArmor();
                 }
             }else if(choice.equals("6")){
-                move(gameBoard);
+                // TODO: Pass in the tile you want the Player to move to (Not the whole board), call board functions to find the tile to move to
+                Tile destinationTile = null; // Use the board fuctions to figure out which destination tile to move to!
+                move(destinationTile); // Pass in the destinationTile here
             }else if(choice.equals("7")){
-                teleport(gameBoard);
+                teleport(gameBoard); // Pass in the destinationTile here
             }else if(choice.equals("8")){
-                back(gameBoard);
+                back(gameBoard); // Pass in the destinationTile here
             }else{
                 System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
                 loop = true;
@@ -281,13 +290,13 @@ public class Hero extends BattleCharacter implements TileRepresentable {
    
     
     /** Get enemy in nearby area, return Null if no avaliable enemy */
-    public Monster getEnemy(Board gameBoard){
+    public Monster getEnemy(Board gameBoard) {
         List<Tile> neighbors = gameBoard.getNeighbors(this.position);
         ArrayList<Monster> enemyList = new ArrayList<Monster>();
         for(int i = 0; i < neighbors.size(); i++){
             TileRepresentable piece = neighbors.get(i).getPiece();
             if(piece instanceof Monster){
-                enemyList.add(piece);
+                enemyList.add((Monster) piece);
             }
         }
         // If more than 1 enemy, ask which to attack
@@ -299,7 +308,9 @@ public class Hero extends BattleCharacter implements TileRepresentable {
             do{
                 for(int i = 0; i < enemyList.size(); i++){
                     System.out.print((i+1)+" ");
-                    enemyList.display();
+                    // TODO: write a display method (ArrayList<Monster> doesn't have display method)
+                    // enemyList.display();
+                    System.out.println(enemyList.toString());
                 }
                 System.out.print("Select the enemy you want to fight:");
                 choice = in.nextLine();
@@ -313,13 +324,14 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                 }else{
                     System.out.print("Invalid ID, select the enemy you want to fight:");
                 }
-            }while(loop)
+            } while(loop);
         }else if (enemyList.size()==1){
-            return enemyList.get(0));
+            return enemyList.get(0);
         }else{
             System.out.print("No monster in nearby position.");
             return null;
         }
+        return null; // This was necessary in case nothing was returned in the loops above
     }
     
     /**
@@ -556,5 +568,36 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         }
     }
 
-    public char represent() {return 'H';}
+    /* TileRepresentable Methods */
+
+    @Override
+    public char represent() {
+        return 'H';
+    }
+
+    @Override
+    public void move(Tile destination) {
+        // TODO Auto-generated method stub
+        if (destination != null && destination.isEmpty()) {
+            // Assuming this destination is valid
+            setPos(destination.getCoords());
+        }        
+    }
+
+    /* Methods To add (Specific to Legends of Valor) */
+
+    // NOTE: We can just use the move(Tile destination) method for the teleport() and back() methods and pass
+
+    public void teleport(Board board) {
+        // TODO: Implement
+        Tile teleportTile = null; // Use board to find the Tile to teleport to
+        move(teleportTile);
+    }
+
+    public void back(Board board) {
+        // TODO: Implement
+        Tile backTile = null; // Use board to find the Tile to go back to (Nexus)
+        move(backTile);
+    }
+
 }

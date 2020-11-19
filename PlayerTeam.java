@@ -52,13 +52,13 @@ public class PlayerTeam extends Team{
             Monster m = (Monster)monsters.getMember(i);
             // If both hero and monster is alive, fight
             if(h.isAlive() && m.isAlive()){
-                h.action(m);
+                h.action(m);    // TODO: Implement method action(Monster m) in the Hero Class (Only the method action(Board gameBoard) existed)
             }else if(h.isAlive()){
                 // if that monster die, attack the first monster that's still alive
                 for(int j=0;j<monsters.size();j++){
                     Monster otherM = (Monster)monsters.getMember(j);
                     if(otherM.isAlive()){
-                        h.action(otherM);
+                        h.action(otherM);   // TODO: Implement method action(Monster m) in the Hero Class (Only the method action(Board gameBoard) existed)
                         break;
                     }
                 }

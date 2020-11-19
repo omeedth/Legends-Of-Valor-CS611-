@@ -202,6 +202,7 @@ public class Board {
     }
 
     // Coordinate within the board
+    // TODO: Get Diagonals as well
     public List<Tile> getNeighbors(Coordinate2D coords) {
         List<Tile> neighbors = new ArrayList<Tile>(4);
 
