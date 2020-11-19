@@ -12,10 +12,12 @@ public class PlayerTeam extends Team{
     /* Change to Coordinate2D Please */
     protected int xPos;
     protected int yPos;
+    protected Coordinate2D coords;  // Use this instead of x,y
     
    /* Default constructor */
     PlayerTeam(){
         super();
+        coords = new Coordinate2D();
         this.xPos = 0;
         this.yPos = 0;
     }
@@ -26,10 +28,12 @@ public class PlayerTeam extends Team{
      */
     PlayerTeam(int xPos, int yPos){
         super();
+        coords = new Coordinate2D(xPos,yPos);
         this.xPos = xPos;
         this.yPos = yPos;
     }
     
+    // TODO: Edit everything so that it uses Coordinate2D instead of xPos, yPos
     /** Move 1 grid up */
     public void moveUp(){ this.yPos -= 1;}
     /** Move 1 grid down */
@@ -69,7 +73,8 @@ public class PlayerTeam extends Team{
     /* MODIFIED - Code so that my (Alex) code works */
 
     public Coordinate2D getCoords() {
-        return new Coordinate2D(this.xPos, this.yPos);
+        // return new Coordinate2D(this.xPos, this.yPos);
+        return this.coords;
     }
 
     /*----------------------------------------------*/
@@ -167,6 +172,6 @@ public class PlayerTeam extends Team{
     @Override
     public void move(Tile destination) {
         // TODO Auto-generated method stub
-        System.out.println("Player Team Moving...");
+        this.coords.set(destination.getCoords());
     }
 }

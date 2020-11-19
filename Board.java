@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import jcolor.*;
 
 public class Board {
+
+    /* Final/Static Data Members */
+    public static final char NULL_TILE_CHARACTER = '~';
     
     /* Data Members */
     private Tile[][] tiles;
@@ -143,7 +146,7 @@ public class Board {
 
     /* Logic Methods */
 
-    public Coordinate2D getLocationOnBoard(Set<Class<? extends Tile>> desiredTileTypes) {
+    public Coordinate2D getLocationOnBoard(Set<Class<? extends Tile>> tileTypes, boolean avoidTileTypes) {
         
         // Create Coordinate2D to return later
         Coordinate2D ret = null;
@@ -152,6 +155,11 @@ public class Board {
         int x = (int) Math.floor(Math.random() * this.getWidth());
         int y = (int) Math.floor(Math.random() * this.getHeight());
         ret = new Coordinate2D(x,y);
+
+        // If there are no Tiles to avoid or prioritize then just return a random point on the board
+        if (tileTypes == null) {
+            return ret;
+        }
 
         // Run BFS until we find it's a tile of the type we desire
         boolean foundTile = false;
@@ -165,15 +173,20 @@ public class Board {
             Tile tile = toVisit.poll();
             visited.add(tile);
 
-            // Check if current tile is a desired tile, and exit if so
-            if (desiredTileTypes.contains(tile.getClass())) {
-                System.out.println(tile.getClass() + " at " + tile.getCoords() + " is inside set: " + desiredTileTypes);
+            // Check if current tile is a desired tile (in the set of tiles and we are NOT avoiding them) or it's not blackListed, and exit if so
+            // (tileTypes.contains(tile.getClass()) && !avoidTileTypes) || (!tileTypes.contains(tile.getClass()) && avoidTileTypes)
+            if (tileTypes.contains(tile.getClass()) ^ avoidTileTypes) {
+                /* DEBUGGING */
+                System.out.println(tile.getClass() + " at " + tile.getCoords() + " is (inside set: " + tileTypes + " AND a Desired Tile) OR (Not in the set: " + tileTypes + " AND an Undesirable Tile)!");
+                /*-----------*/
                 foundTile = true;
                 ret = new Coordinate2D(tile.getCoords());
                 continue;
             }
 
-            System.out.println(tile.getClass() + " at " + tile.getCoords() + " is NOT inside set: " + desiredTileTypes);
+            /* DEBUGGING */
+            System.out.println(tile.getClass() + " at " + tile.getCoords() + " is NOT inside set: " + tileTypes + " OR an UNDESIRED Tile!");
+            /*-----------*/
 
             // Get neighbors (valid coordinates up, right, down, left)
             List<Tile> neighbors = getNeighbors(tile);
@@ -259,8 +272,12 @@ public class Board {
                 Tile tile = this.tiles[row][col];
                 res += "|    ";
 
+                if (tile == null) {
+                    res += NULL_TILE_CHARACTER; // Character for null Tiles
+                }
+
                 // Show the piece on the tile (First one)
-                if (!tile.isEmpty()) {
+                else if (!tile.isEmpty()) {
                     res += String.format(Ansi.colorize("%c", Attribute.GREEN_TEXT()), tile.getPiece().represent());
                 }
 

@@ -49,6 +49,18 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         this.inventory = new Inventory();
       }
 
+      /* ADDED - required position to also be added */
+      Hero(String name, Coordinate2D position, int exp, double mana, double str, double dex, double agi, double coins){
+        super(name, position, 1, 0);
+        this.exp = exp;
+        this.coins = coins;
+        this.mana = mana;
+        this.str = str;
+        this.dex = dex;
+        this.agi = agi;
+        this.inventory = new Inventory();
+      }
+
     /** GET METHODS */
     public double getCoins(){ return this.coins;}
     public double getMana(){ return this.mana;}

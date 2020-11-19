@@ -104,6 +104,28 @@ public class LegendGame extends RpgGame{
                 }while(innerLoop);
             }
         }while(loop);
+
+        /* Generate Board */
+        int[][] tileIds = generateTileIdMatrix();
+        this.world.fillMatrixFromTileIdMatrix(tileIds);
+
+        /* Generate start location on the board for the heroes */
+        Set<Class<? extends Tile>> blackListedTiles = new HashSet<>();
+        blackListedTiles.add(InaccessibleTile.class);
+        Coordinate2D generatedPoint = this.world.getLocationOnBoard(blackListedTiles,true);
+
+        /* Set Position of Heroes */
+
+        // Check if valid player coordinates were found
+        if (generatedPoint == null) {
+            System.out.println(this.world);
+            throw new IllegalArgumentException("The map had no valid starting location for the party!");
+        }
+
+        Tile startTile = this.world.get(generatedPoint);
+        this.team.move(startTile);
+        startTile.setPiece(this.team);
+
     }
     
     
@@ -111,12 +133,13 @@ public class LegendGame extends RpgGame{
     public void play(){
         // End the game if all heroes die
         do{
-            // Show world map before move
+            /* Show world map before move */
             this.world.displayMap();
-            // Move team to new tile pos
-            this.move();
-            // Launch event on that tile
-            this.event();
+            /* Move team to new tile pos */
+            // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
+            this.performTurn();
+            /* Launch event on that tile */
+            // this.event(); // EDITED - I switched to have this be incorporated in the performTurn() method
         }while(this.team.isFaint()==false);
     }
     
@@ -260,6 +283,82 @@ public class LegendGame extends RpgGame{
         System.out.println();
         System.exit(0);
     }
+
+    /* ADDED CODE (CODE FOR THE TURN) */
+
+    public void performTurn() {
+        // TODO:
+        //  1. have player move to a different tile
+        //  2. run tile logic (EX: monster spawn with percentage chance on CommonTile)
+
+        Scanner input = new Scanner(System.in);
+
+        // Get player input for movement
+        String choice = KeyboardInputUtility.promptTillValid(input, "Please input where you would like to go (W,A,S,D) or (quit/QUIT): ", (inputStr) -> {
+            String str = inputStr.toLowerCase();
+            if (str.equals("quit")) return true;
+            return new HashSet<String>(Arrays.asList(new String[] {"w","a","s","d"})).contains(str) && validMove(str);
+        });
+
+        // If you want to quit the game exit this method early
+        if (choice.equals("quit")) {
+            System.exit(0);
+            return;
+        }
+
+        // Move the party TODO: Consolidate repeated code
+        choice.toLowerCase();
+        Coordinate2D currentCoords = this.team.getCoords();
+        Tile currTile = this.world.get(currentCoords);
+        Coordinate2D destination = null;
+        Tile destinationTile = null;
+
+        if (choice.equals("w")) {
+            // Go up
+            destination = new Coordinate2D(currentCoords.getX(),currentCoords.getY() + 1);
+        }
+        
+        else if (choice.equals("a")) {
+            // Go left
+            destination = new Coordinate2D(currentCoords.getX() - 1,currentCoords.getY());
+        }
+
+        else if (choice.equals("s")) {
+            // Go down
+            destination = new Coordinate2D(currentCoords.getX(),currentCoords.getY() - 1);
+        }
+
+        else if (choice.equals("d")) {
+            // Go right
+            destination = new Coordinate2D(currentCoords.getX() + 1,currentCoords.getY());
+        }
+
+        destinationTile = this.world.get(destination);
+
+        System.out.println("Source: " + currTile + ", Destination: " + destinationTile);
+        this.world.movePiece(this.team, currTile, destinationTile);
+
+        // Run tile logic:
+        //  MarketTile:
+        //      1. Show market (the items they possess and the prices, level cap etc.)
+        //      2. Show heroes' Inventory and current money
+        //  CommonTile:
+        //      1. Roll a die to see if there is a monster encounter
+        //          - If no monster encounter show map again and allow the players to rest
+        //      2. If monster encounter show battle scene
+        //      3. Allow options to equip, attack, cast, use item
+        //      4. Once the battle is over show experience gained and possible level up screen
+        //          - If players died then make them lose experience, gold, etc.
+        if (destinationTile instanceof Interactable) {
+            ((Interactable) destinationTile).interact(this.team);
+        }
+
+        KeyboardInputUtility.promptTillValid(input, "Press \"Enter\" to continue", (str) -> true);
+        System.out.println();
+
+    }
+    
+    /*--------------------------------*/
     
     /** Move team on the world map */
     public void move(){
@@ -353,6 +452,8 @@ public class LegendGame extends RpgGame{
         }while(loop);
     }
 
+    /* ADDED - Generate the map for Legends of Valor (Top,Mid,Bot) lanes */
+
     /* Generate Tile ID Matrix */
     // TODO: Generate 3 Lanes (Top, Mid, and Bot) where each lane has randomly
     //       assigned Tiles
@@ -366,7 +467,7 @@ public class LegendGame extends RpgGame{
         int[][] tileIds = new int[w][h];
 
         // Make mapping of probabilities for possible tiles
-        ArrayList<Float> probabilities = new ArrayList<Float>();
+        ArrayList<Float> probabilities = new ArrayList<Float>(); // Probabilities of Tiles
         probabilities.add(0.5f);
         probabilities.add(0.2f);
         probabilities.add(0.3f);
@@ -449,5 +550,7 @@ public class LegendGame extends RpgGame{
 
         return result;
     }
+
+    /*-------------------------------------------------------------------------------*/
 
 }

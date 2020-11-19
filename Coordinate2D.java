@@ -46,6 +46,11 @@ public class Coordinate2D {
         this.y = y;
     }
 
+    public void set(Coordinate2D coords) {
+        setX(coords.getX());
+        setY(coords.getY());
+    }
+
     /* Additional Methods */
 
     @Override
