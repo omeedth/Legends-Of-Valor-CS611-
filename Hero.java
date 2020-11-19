@@ -207,18 +207,18 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         return Math.random() < this.agi*0.002;
     }
     
-    /** Take an action in battle */
-    public void action(BattleCharacter enemy){
-        Monster monster = (Monster)enemy;
+    /** Take an action in battle
+     * @param Board, the whole board for gaming
+     */
+    public void action(Board gameBoard){
+        // Choose action
         Scanner in = new Scanner(System.in);
         String choice;
         boolean loop;
         System.out.println();
-        System.out.println("\u001B[31m Turn "+this.name+" V.S "+enemy.getName()+"\u001B[0m");
-        System.out.println();
         do{
             loop = false;
-            System.out.print("Choose action 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor or I/i to view info:");
+            System.out.print("Choose action 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
             choice = in.nextLine();
             if(choice.equals("Q")||choice.equals("q")){
                 System.exit(0);
@@ -231,22 +231,19 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                 System.out.println("---------------------------------------------------------------------");
                 this.displayStat();
                 System.out.println();
-                System.out.println("----------------");
-                System.out.println("  YOUR ENEMY");
-                System.out.println("----------------");
-                System.out.println("Level   Name\t\t HP  Defense");
-                System.out.println("------------------------------------");
-                enemy.display();
-                System.out.println();
                 loop = true;
             }else if(choice.equals("1")){
-                attack(monster);
+                Monster monster = getEnemy(gameBoard);
+                if(monster != null){ attack(monster); }
+                else{ loop = true;}
             }else if(choice.equals("2")){
                 if(this.inventory.getSpells().size()<1){
                     System.out.println("No spell in inventory:");
                     loop = true;
                 }else{
-                    castSpell(monster);
+                    Monster monster = getEnemy(gameBoard);
+                    if(monster != null){ castSpell(monster); }
+                    else{ loop = true;}
                 }
             }else if(choice.equals("3")){
                 if(this.inventory.getPotions().size()<1){
@@ -269,13 +266,62 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                 }else{
                     changeArmor();
                 }
+            }else if(choice.equals("6")){
+                move(gameBoard);
+            }else if(choice.equals("7")){
+                teleport(gameBoard);
+            }else if(choice.equals("8")){
+                back(gameBoard);
             }else{
-                System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor or I/i to view info:");
+                System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
                 loop = true;
             }
          }while(loop);
       }
    
+    
+    /** Get enemy in nearby area, return Null if no avaliable enemy */
+    public Monster getEnemy(Board gameBoard){
+        List<Tile> neighbors = gameBoard.getNeighbors();
+        ArrayList<Monster> enemyList = new ArrayList<Monster>();
+        for(int i = 0; i < neighbors.size(); i++){
+            TileRepresentable piece = neighbors.get(i).getPiece();
+            if(piece instanceof Monster){
+                enemyList.add(piece);
+            }
+        }
+        // If more than 1 enemy, ask which to attack
+        if (enemyList.size()>1){
+            Scanner in = new Scanner(System.in);
+            String choice;
+            boolean loop = true;
+            System.out.println();
+            do{
+                for(int i = 0; i < enemyList.size(); i++){
+                    System.out.print((i+1)+" ");
+                    enemyList.display();
+                }
+                System.out.print("Select the enemy you want to fight:");
+                choice = in.nextLine();
+                if(choice.equals("Q")||choice.equals("q")){
+                    System.exit(0);
+                }else if(choice.matches("\\d+")){
+                    int intChoice = Integer.parseInt(choice);
+                    if(intChoice>0 && intChoice<=enemyList.size()){
+                        return enemyList.get(intChoice-1);
+                    }
+                }else{
+                    System.out.print("Invalid ID, select the enemy you want to fight:");
+                }
+            }while(loop)
+        }else if (enemyList.size()==1){
+            return enemyList.get(0));
+        }else{
+            System.out.print("No monster in nearby position.");
+            return null;
+        }
+    }
+    
     /**
      * Attack a monster
      * if success, damage = (strength + weapon damage)*0.05
