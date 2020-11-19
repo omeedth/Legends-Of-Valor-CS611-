@@ -29,6 +29,7 @@ public abstract class Character{
     
     /** Get position of the char */
     public Coordinate2D getPos(){ return this.position;}
+    public void setPos(Coordinate2D position){ this.position = position;}
     
     /** Display information of the char */
     public abstract void display();

@@ -282,7 +282,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     
     /** Get enemy in nearby area, return Null if no avaliable enemy */
     public Monster getEnemy(Board gameBoard){
-        List<Tile> neighbors = gameBoard.getNeighbors();
+        List<Tile> neighbors = gameBoard.getNeighbors(this.position);
         ArrayList<Monster> enemyList = new ArrayList<Monster>();
         for(int i = 0; i < neighbors.size(); i++){
             TileRepresentable piece = neighbors.get(i).getPiece();
