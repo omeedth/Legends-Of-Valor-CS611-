@@ -136,7 +136,7 @@ public class Board {
 
     /* Logic Methods */
 
-    public List<Tile> getPossibleTeleportTiles() {
+    public List<Tile> getPossibleTeleportTiles(Coordinate2D coordinates) {
         // Get all Tile objects in:
         //  1. Different Lanes
         //  2. Tile objects the below the farthest point a Hero object has explored in a lane
