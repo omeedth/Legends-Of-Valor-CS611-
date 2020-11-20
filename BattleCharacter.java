@@ -27,6 +27,9 @@ public abstract class BattleCharacter extends Character {
         this.defense = defense;
     }
 
+    /** Take action based on rule */
+    public abstract void action(Board gameBoard);
+    
     /**
      * Take an attack action
      * @param BattleCharacter, the enemy for the attack
