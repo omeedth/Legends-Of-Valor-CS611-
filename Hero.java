@@ -22,6 +22,8 @@ public class Hero extends BattleCharacter implements TileRepresentable {
 
     protected Weapon weapon;
     protected Armor armor;
+    
+    protected Coordinate2D nexus;
 
    
     /** Default Constructor **/
@@ -38,8 +40,8 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     }
     
     /** User defined constructor */
-    Hero(String name, int exp, double mana, double str, double dex, double agi, double coins){
-        super(name, 1, 0);
+    Hero(String name, int exp, double mana, double str, double dex, double agi, double coins, Coordinate2D nexus){
+        super(name, 1, 0, nexus); // Start pos = nexus
         this.exp = exp;
         this.coins = coins;
         this.mana = mana;
@@ -47,18 +49,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         this.dex = dex;
         this.agi = agi;
         this.inventory = new Inventory();
-      }
-
-      /* ADDED - required position to also be added */
-      Hero(String name, Coordinate2D position, int exp, double mana, double str, double dex, double agi, double coins){
-        super(name, position, 1, 0);
-        this.exp = exp;
-        this.coins = coins;
-        this.mana = mana;
-        this.str = str;
-        this.dex = dex;
-        this.agi = agi;
-        this.inventory = new Inventory();
+        this.nexus = nexus;
       }
 
     /** GET METHODS */
@@ -219,12 +210,6 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         return Math.random() < this.agi*0.002;
     }
 
-    /** Take an action in battle
-     * @param Monaster, the monster to do the action on
-     */
-    public void action(Monster monster) {
-        // TODO: Implement (This is necessary because in the PlayerTeam Class hero.action(Monster m) was called but that method didn't exist)
-    }
     
     /** Take an action in battle
      * @param Board, the whole board for gaming
@@ -594,7 +579,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         // TODO Auto-generated method stub
         if (destination != null && destination.isEmpty()) {
             // Assuming this destination is valid
-            setPos(destination.getCoords());
+            this.setPos(destination.getCoords());
         }        
     }
 
@@ -603,14 +588,19 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     // NOTE: We can just use the move(Tile destination) method for the teleport() and back() methods and pass
     public void teleport(Board board) {
         // TODO: Implement
-        Tile teleportTile = null; // Use board to find the Tile to teleport to
-        move(teleportTile);
+        List<Tile> teleportTile = board.getTeleportTile(this.pos); // Use board to find the Tile to teleport to
+        // Display tiles
+        for(int i = 0; i < teleportTile.size(); i++){
+            System.out.println(i+". "+teleportTile.get(i).getCoords().toString());
+        }
+        System.out.println("Enter the coordinate you want to teleport to:");
+        int opt = chooseFromList(new Scanner(System.in), teleportTile);
+        move(teleportTile.get(opt));
     }
 
     public void back(Board board) {
         // TODO: Implement
-        Tile backTile = null; // Use board to find the Tile to go back to (Nexus)
-        move(backTile);
+        this.setPos(this.nexus);
     }
 
 }
