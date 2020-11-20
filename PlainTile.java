@@ -14,7 +14,7 @@ import jcolor.Attribute;
 
 /* Internal Imports */
 
-public class CommonTile extends Tile implements Interactable {
+public class PlainTile extends Tile implements Interactable {
     
     /* Static Members */
     public static char TILE_CHAR = ' ';
@@ -24,7 +24,7 @@ public class CommonTile extends Tile implements Interactable {
 
     /* Constructors */
 
-    public CommonTile(Coordinate2D coords) {
+    public PlainTile(Coordinate2D coords) {
         super(coords,TILE_CHAR);
     }
 
@@ -42,7 +42,7 @@ public class CommonTile extends Tile implements Interactable {
 
     @Override
     public void interact(Object obj) {
-        // TODO: Common Tile Logic
+        // TODO: Plain Tile Logic - No Special Attribute
     }
 
 }

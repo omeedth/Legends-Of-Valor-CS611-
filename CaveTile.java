@@ -1,8 +1,7 @@
 /*
  *  Author: Alex Thomas
- *  Creation Date: 10/29/2020
- *  Purpose: Defines a Tile that allows a player to purchase from a market
- *              1. Players can stop here to buy/sell items
+ *  Creation Date: 11/20/2020
+ *  Purpose: Defines a Tile that gives players additional agility
  * 
  */
 
@@ -12,16 +11,16 @@ import java.util.Scanner;
 
 /* Internal Imports */
 
-public class MarketTile extends Tile implements Interactable {
+public class CaveTile extends Tile implements Interactable {
     
     /* Static Members */
-    public static char TILE_CHAR = 'M';
+    public static char TILE_CHAR = 'C';
 
     /* Data Members */
 
     /* Constructors */
 
-    public MarketTile(Coordinate2D coords) {
+    public CaveTile(Coordinate2D coords) {
         super(coords,TILE_CHAR);
     }
 
@@ -33,7 +32,7 @@ public class MarketTile extends Tile implements Interactable {
 
     @Override
     public void interact(Object obj) {
-        // TODO: Market Code
+        // TODO: Cave Code - Add additional Agility to the player while on this Tile
     }
 
 }

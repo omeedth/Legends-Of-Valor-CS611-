@@ -28,9 +28,12 @@ public class TileFactory {
     private static final HashMap<Integer, Class<? extends Tile>> TILES;
 
     /* TODO: Add all values for the concrete Tile objects */
-    public static final int COMMON = 0;
+    public static final int PLAIN = 0;
     public static final int INACCESSIBLE = 1;
-    public static final int MARKET = 2;
+    public static final int NEXUS = 2;
+    public static final int BUSH = 3;
+    public static final int CAVE = 4;
+    public static final int KOULOU = 5;
 
     /* Constructors */
 
@@ -49,12 +52,19 @@ public class TileFactory {
         TILES = new HashMap<Integer, Class<? extends Tile>>();
 
         /* TODO: Add all Tile classes */
-        TILES.put(COMMON, CommonTile.class);
+        TILES.put(PLAIN, PlainTile.class);
         TILES.put(INACCESSIBLE, InaccessibleTile.class);
-        TILES.put(MARKET, MarketTile.class);
+        TILES.put(NEXUS, NexusTile.class);
+        TILES.put(BUSH, BushTile.class);
+        TILES.put(CAVE, CaveTile.class);
+        TILES.put(KOULOU, KoulouTile.class);
 
         /* Make unmodifiable */
         Collections.unmodifiableMap(TILES);
+    }
+
+    public static boolean tileIdExists(int tileId) {
+        return TILES.containsKey(tileId);
     }
 
     /**

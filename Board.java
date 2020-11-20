@@ -293,12 +293,14 @@ public class Board {
                 // If no pieces on the tiles, show the representation of the tile
                 else {
 
-                    if (tile instanceof CommonTile) {
+                    if (tile instanceof PlainTile) {
                         res += String.format(Ansi.colorize("%c", Attribute.GREEN_TEXT()), tile.toCharacter());
                     } else if (tile instanceof InaccessibleTile) {
                         res += String.format(Ansi.colorize("%c", Attribute.RED_TEXT()), tile.toCharacter());
-                    } else if (tile instanceof MarketTile) {
+                    } else if (tile instanceof NexusTile) {
                         res += String.format(Ansi.colorize("%c", Attribute.YELLOW_TEXT()), tile.toCharacter());
+                    } else {
+                        res += String.format("%c", tile.toCharacter());
                     }
 
                 }                
