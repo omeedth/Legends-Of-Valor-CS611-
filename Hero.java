@@ -277,7 +277,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
             }else if(choice.equals("7")){
                 teleport(gameBoard); // Pass in the destinationTile here
             }else if(choice.equals("8")){
-                back(gameBoard); // Pass in the destinationTile here
+                back(); // Pass in the destinationTile here
             }else{
                 System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
                 loop = true;
@@ -598,7 +598,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         move(teleportTile.get(opt));
     }
 
-    public void back(Board board) {
+    public void back() {
         // TODO: Implement
         this.setPos(this.nexus);
     }
