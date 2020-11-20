@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import jcolor.*;
 
+// TODO: Consider adding a Lane Object that the board has
 public class Board {
 
     /* Final/Static Data Members */
@@ -133,18 +134,14 @@ public class Board {
         }
     }
 
-    // TODO: retrieve the nexus tile for the Heroes
-    //       1. Check if the nexus tile is empty
-    //       2. Check if this nexus is the same lane as the hero
-    public void getHeroNexus(Hero hero) {
-        /*
-         * Given the Hero object (Contains Coordinate2D)
-         * So figure out Nexus Tile on the lane
-         */
-        
-    }
-
     /* Logic Methods */
+
+    public List<Tile> getPossibleTeleportTiles() {
+        // Get all Tile objects in:
+        //  1. Different Lanes
+        //  2. Tile objects the below the farthest point a Hero object has explored in a lane
+        return null;
+    }
 
     public Coordinate2D getLocationOnBoard(Set<Class<? extends Tile>> tileTypes, boolean avoidTileTypes) {
         

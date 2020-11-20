@@ -143,37 +143,37 @@ public class LegendGame extends RpgGame{
         }while(this.team.isFaint()==false);
     }
     
-    public void event(){
-        // Get curret pos of the team
-        int teamX = this.team.getXPos();
-        int teamY = this.team.getYPos();
-        Tile destTile = this.world.getTile(teamX,teamY); // Modified
-        String eSign = destTile.toString();
-        // If current tile is a Market, trade
-        if(eSign.equals("\u001B[34mM\u001B[0m")){
-            System.out.println();
-            System.out.println("\u001B[32m You Found a Market. \u001B[0m");
-            System.out.println();
-            this.trade();
-        }else{
-            // If current tile is common, encounter a battle with 80% chance
-            if(Math.random()<0.80){
-                System.out.println();
-                System.out.println("\u001B[31m You Encountered a Fight. \u001B[0m");
-                System.out.println();
-                this.battle();
-            }else{
-                System.out.println();
-                System.out.println("\u001B[35m Nothing Special Happend. \u001B[0m");
-                System.out.println();
-                this.common();
-            }
-        }
-        // Update change to the world
-        // this.world.updateTeamPos(this.team.getXPos(),this.team.getYPos());
-        Tile source = new CommonTile(new Coordinate2D());
-        this.world.movePiece(this.team, source, destTile);
-    }
+    // public void event(){
+    //     // Get curret pos of the team
+    //     int teamX = this.team.getXPos();
+    //     int teamY = this.team.getYPos();
+    //     Tile destTile = this.world.getTile(teamX,teamY); // Modified
+    //     String eSign = destTile.toString();
+    //     // If current tile is a Market, trade
+    //     if(eSign.equals("\u001B[34mM\u001B[0m")){
+    //         System.out.println();
+    //         System.out.println("\u001B[32m You Found a Market. \u001B[0m");
+    //         System.out.println();
+    //         this.trade();
+    //     }else{
+    //         // If current tile is common, encounter a battle with 80% chance
+    //         if(Math.random()<0.80){
+    //             System.out.println();
+    //             System.out.println("\u001B[31m You Encountered a Fight. \u001B[0m");
+    //             System.out.println();
+    //             this.battle();
+    //         }else{
+    //             System.out.println();
+    //             System.out.println("\u001B[35m Nothing Special Happend. \u001B[0m");
+    //             System.out.println();
+    //             this.common();
+    //         }
+    //     }
+    //     // Update change to the world
+    //     // this.world.updateTeamPos(this.team.getXPos(),this.team.getYPos());
+    //     Tile source = new CommonTile(new Coordinate2D());
+    //     this.world.movePiece(this.team, source, destTile);
+    // }
     
     /** Trade in market */
     public void trade(){
@@ -181,34 +181,34 @@ public class LegendGame extends RpgGame{
     }
     
     /** Common event when reach empty slot */
-    public void common(){
-        System.out.print("Enter R/r to take a rest, or any other key to continue adventure:");
-        Scanner in = new Scanner(System.in);
-        String optKey = in.nextLine();
-        if(optKey.equals("Q")||optKey.equals("q")){
-            System.exit(0);
-        }else if(optKey.equals("R")||optKey.equals("r")){
-            // Display heros in team
-            this.team.display();
-            boolean loop = true;
-            do{
-                System.out.print("Enter Hero ID to view a hero, or C/c to continue adventure:");
-                optKey = in.nextLine();
-                if(optKey.equals("Q")||optKey.equals("q")){
-                    System.exit(0);
-                }else if(optKey.matches("\\d+")){
-                    int heroId = Integer.parseInt(optKey);
-                    if(heroId>0 && heroId<= this.team.size()){
-                        this.viewHero((Hero)this.team.getMember(heroId-1));
-                    }else{
-                        System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
-                    }
-                }else if(optKey.equals("C")==false && optKey.equals("c")==false){
-                    System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
-                }
-            }while(loop);
-        }
-    }
+    // public void common(){
+    //     System.out.print("Enter R/r to take a rest, or any other key to continue adventure:");
+    //     Scanner in = new Scanner(System.in);
+    //     String optKey = in.nextLine();
+    //     if(optKey.equals("Q")||optKey.equals("q")){
+    //         System.exit(0);
+    //     }else if(optKey.equals("R")||optKey.equals("r")){
+    //         // Display heros in team
+    //         this.team.display();
+    //         boolean loop = true;
+    //         do{
+    //             System.out.print("Enter Hero ID to view a hero, or C/c to continue adventure:");
+    //             optKey = in.nextLine();
+    //             if(optKey.equals("Q")||optKey.equals("q")){
+    //                 System.exit(0);
+    //             }else if(optKey.matches("\\d+")){
+    //                 int heroId = Integer.parseInt(optKey);
+    //                 if(heroId>0 && heroId<= this.team.size()){
+    //                     this.viewHero((Hero)this.team.getMember(heroId-1));
+    //                 }else{
+    //                     System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
+    //                 }
+    //             }else if(optKey.equals("C")==false && optKey.equals("c")==false){
+    //                 System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
+    //             }
+    //         }while(loop);
+    //     }
+    // }
     
     /**
      * Helper function
@@ -361,63 +361,63 @@ public class LegendGame extends RpgGame{
     /*--------------------------------*/
     
     /** Move team on the world map */
-    public void move(){
-        System.out.print("Time to take a move to the next destination:");
-        // Get curret pos of the team
-        int teamX = this.team.getXPos();
-        int teamY = this.team.getYPos();
+    // public void move(){
+    //     System.out.print("Time to take a move to the next destination:");
+    //     // Get curret pos of the team
+    //     int teamX = this.team.getXPos();
+    //     int teamY = this.team.getYPos();
         
-        String moveKey;
-        Scanner in = new Scanner(System.in);
-        boolean loop = true;
-        do{
-            moveKey = in.nextLine();
-            if(moveKey.equals("W")||moveKey.equals("w")){
-                if(teamY <= 0){
-                    System.out.print("Reach top edge of the world, please try a different move:");
-                }else if(this.world.isOccupied(teamX, teamY-1)){
-                    System.out.print("Inaccessible tile, please try a different move:");
-                }else{
-                    this.team.moveUp();
-                    loop = false;
-                }
-            }else if(moveKey.equals("A")||moveKey.equals("a")){
-                if(teamX <= 0){
-                    System.out.print("Reach left edge of the world, please try a different move:");
-                }else if(this.world.isOccupied(teamX-1, teamY)){
-                    System.out.print("Inaccessible tile, please try a different move:");
-                }else{
-                    this.team.moveLeft();
-                    loop = false;
-                }
-            }else if(moveKey.equals("S")||moveKey.equals("s")){
-                if(teamY >= this.world.getHeight()){
-                    System.out.print("Reach bottom edge of the world, please try a different move:");
-                }else if(this.world.isOccupied(teamX, teamY+1)){
-                    System.out.print("Inaccessible tile, please try a different move:");
-                }else{
-                    this.team.moveDown();
-                    loop = false;
-                }
-            }else if(moveKey.equals("D")||moveKey.equals("d")){
-                if(teamX >= this.world.getWidth()){
-                    System.out.print("Reach right edge of the world, please try a different move:");
-                }else if(this.world.isOccupied(teamX+1, teamY)){
-                    System.out.print("Inaccessible tile, please try a different move:");
-                }else{
-                    this.team.moveRight();
-                    loop = false;
-                }
-            }else if(moveKey.equals("Q")||moveKey.equals("q")){
-                System.exit(0);
-            }else if(moveKey.equals("I")||moveKey.equals("i")){
-                this.team.display();
-                System.out.print("Time to take a move to the next destination:");
-            }else{
-                System.out.print("Invalid input, please use W/A/S/D:");
-            }
-        }while(loop);
-    }
+    //     String moveKey;
+    //     Scanner in = new Scanner(System.in);
+    //     boolean loop = true;
+    //     do{
+    //         moveKey = in.nextLine();
+    //         if(moveKey.equals("W")||moveKey.equals("w")){
+    //             if(teamY <= 0){
+    //                 System.out.print("Reach top edge of the world, please try a different move:");
+    //             }else if(this.world.isOccupied(teamX, teamY-1)){
+    //                 System.out.print("Inaccessible tile, please try a different move:");
+    //             }else{
+    //                 this.team.moveUp();
+    //                 loop = false;
+    //             }
+    //         }else if(moveKey.equals("A")||moveKey.equals("a")){
+    //             if(teamX <= 0){
+    //                 System.out.print("Reach left edge of the world, please try a different move:");
+    //             }else if(this.world.isOccupied(teamX-1, teamY)){
+    //                 System.out.print("Inaccessible tile, please try a different move:");
+    //             }else{
+    //                 this.team.moveLeft();
+    //                 loop = false;
+    //             }
+    //         }else if(moveKey.equals("S")||moveKey.equals("s")){
+    //             if(teamY >= this.world.getHeight()){
+    //                 System.out.print("Reach bottom edge of the world, please try a different move:");
+    //             }else if(this.world.isOccupied(teamX, teamY+1)){
+    //                 System.out.print("Inaccessible tile, please try a different move:");
+    //             }else{
+    //                 this.team.moveDown();
+    //                 loop = false;
+    //             }
+    //         }else if(moveKey.equals("D")||moveKey.equals("d")){
+    //             if(teamX >= this.world.getWidth()){
+    //                 System.out.print("Reach right edge of the world, please try a different move:");
+    //             }else if(this.world.isOccupied(teamX+1, teamY)){
+    //                 System.out.print("Inaccessible tile, please try a different move:");
+    //             }else{
+    //                 this.team.moveRight();
+    //                 loop = false;
+    //             }
+    //         }else if(moveKey.equals("Q")||moveKey.equals("q")){
+    //             System.exit(0);
+    //         }else if(moveKey.equals("I")||moveKey.equals("i")){
+    //             this.team.display();
+    //             System.out.print("Time to take a move to the next destination:");
+    //         }else{
+    //             System.out.print("Invalid input, please use W/A/S/D:");
+    //         }
+    //     }while(loop);
+    // }
 
     /** Display information about the game */
     public void info(){
