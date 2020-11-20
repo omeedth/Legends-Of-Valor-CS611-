@@ -221,11 +221,23 @@ public class Board {
         Coordinate2D right = new Coordinate2D(coords.getX() + 1,coords.getY());
         Coordinate2D down = new Coordinate2D(coords.getX(),coords.getY() - 1);
         Coordinate2D left = new Coordinate2D(coords.getX() - 1,coords.getY());
+        // --- Diagonals Coordinates
+        Coordinate2D upRight = new Coordinate2D(coords.getX() + 1, coords.getY() + 1);
+        Coordinate2D upLeft = new Coordinate2D(coords.getX() - 1, coords.getY() + 1);
+        Coordinate2D downRight = new Coordinate2D(coords.getX() + 1, coords.getY() - 1);
+        Coordinate2D downLeft = new Coordinate2D(coords.getX() - 1, coords.getY() - 1);
 
+        // Cardinal Directions
         if (insideBoard(up)) neighbors.add(this.get(up));
         if (insideBoard(right)) neighbors.add(this.get(right));
         if (insideBoard(down)) neighbors.add(this.get(down));
         if (insideBoard(left)) neighbors.add(this.get(left));
+
+        // Diagonals
+        if (insideBoard(upRight)) neighbors.add(this.get(upRight));
+        if (insideBoard(upLeft)) neighbors.add(this.get(upLeft));
+        if (insideBoard(downRight)) neighbors.add(this.get(downRight));
+        if (insideBoard(downLeft)) neighbors.add(this.get(downLeft));
 
         return neighbors;
     }
