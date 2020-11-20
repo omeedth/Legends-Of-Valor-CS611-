@@ -12,14 +12,14 @@ public class PlayerTeam extends Team{
     /* Change to Coordinate2D Please */
     protected int xPos;
     protected int yPos;
-    protected Coordinate2D coords;  // Use this instead of x,y
+    //protected Coordinate2D coords;  // Use this instead of x,y
     
    /* Default constructor */
     PlayerTeam(){
         super();
-        coords = new Coordinate2D();
-        this.xPos = 0;
-        this.yPos = 0;
+        //coords = new Coordinate2D();
+        //this.xPos = 0;
+        //this.yPos = 0;
     }
     
     /**
@@ -28,26 +28,32 @@ public class PlayerTeam extends Team{
      */
     PlayerTeam(int xPos, int yPos){
         super();
-        coords = new Coordinate2D(xPos,yPos);
-        this.xPos = xPos;
-        this.yPos = yPos;
+        //coords = new Coordinate2D(xPos,yPos);
+        //this.xPos = xPos;
+        //this.yPos = yPos;
     }
+    
+    // NO LONGER NEED - move is done individually by each Hero
     
     // TODO: Edit everything so that it uses Coordinate2D instead of xPos, yPos
     /** Move 1 grid up */
-    public void moveUp(){ this.yPos -= 1;}
+    //public void moveUp(){ this.yPos -= 1;}
     /** Move 1 grid down */
-    public void moveDown(){ this.yPos += 1;}
+    //public void moveDown(){ this.yPos += 1;}
     /** Move 1 grid left */
-    public void moveLeft(){ this.xPos -= 1;}
+    //public void moveLeft(){ this.xPos -= 1;}
     /** Move 1 grid right */
-    public void moveRight(){ this.xPos += 1;}
+    //public void moveRight(){ this.xPos += 1;}
     
     /** GET POSITION */
-    public int getXPos(){ return this.xPos;}
-    public int getYPos(){ return this.yPos;}
+    //public int getXPos(){ return this.xPos;}
+    //public int getYPos(){ return this.yPos;}
 
+    
+    // NO LONGER NEED: Battle is handle individually by each hero
+    
     /** Take turn in a battle */
+    /**
     public void takeTurn(MonsterTeam monsters){
         for(int i=0;i<members.size();i++){
             // If all monsters faint, end the battle
@@ -69,14 +75,16 @@ public class PlayerTeam extends Team{
             }
         }
     }
+     */
 
     /* MODIFIED - Code so that my (Alex) code works */
-
+    /**
     public Coordinate2D getCoords() {
         // return new Coordinate2D(this.xPos, this.yPos);
         return this.coords;
     }
-
+     */
+    
     /*----------------------------------------------*/
     
     /** regain Some HP and MP for alive heroes */
@@ -163,6 +171,7 @@ public class PlayerTeam extends Team{
         return true;
     }
 
+    /**
     @Override
     public char represent() {
         // TODO Auto-generated method stub
@@ -174,4 +183,5 @@ public class PlayerTeam extends Team{
         // TODO Auto-generated method stub
         this.coords.set(destination.getCoords());
     }
+     */
 }

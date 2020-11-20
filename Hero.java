@@ -580,6 +580,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         }
     }
 
+    
     /* TileRepresentable Methods */
 
     @Override
@@ -587,6 +588,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         return 'H';
     }
 
+    // Move to a new destination
     @Override
     public void move(Tile destination) {
         // TODO Auto-generated method stub
@@ -599,7 +601,6 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     /* Methods To add (Specific to Legends of Valor) */
 
     // NOTE: We can just use the move(Tile destination) method for the teleport() and back() methods and pass
-
     public void teleport(Board board) {
         // TODO: Implement
         Tile teleportTile = null; // Use board to find the Tile to teleport to
