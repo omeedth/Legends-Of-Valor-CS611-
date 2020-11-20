@@ -15,12 +15,12 @@ public class LegendTeam extends Team{
     }
     
     /** Take turn in a battle */
-    public void takeTurn(){
+    public void takeTurn(Board gameBoard){
         for(int i=0;i<members.size();i++){
             // For each member alive, take action
             BattleCharactor c = (BattleCharactor)this.members.get(i);
             if(c.isAlive()){
-                c.action();
+                c.action(Board gameBoard);
             }
         }
     }
