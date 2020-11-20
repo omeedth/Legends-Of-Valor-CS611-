@@ -133,7 +133,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                         itemId = in.nextLine();
                         int idNum = Integer.parseInt(itemId);
                         if(idNum>0 && idNum<=itemList.size()){
-                            RpgItem i = itemList.remove(idNum);
+                            RpgItem i = itemList.remove(idNum-1);
                             // Sale with half price
                             double outPrice = i.getPrice()/2;
                             this.coins += outPrice;
