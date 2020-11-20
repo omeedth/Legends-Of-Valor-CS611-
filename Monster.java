@@ -31,6 +31,36 @@ public abstract class Monster extends BattleCharacter{
         return Math.random() < this.dodgeChance*0.01 ;
     }
 
+    /* Take action based on rule */
+    public void action(Board gameBoard){
+        Hero enemy = this.getEnemy(gameBoard);
+        // If no hero, move; If hero nearby, attack
+        if(enemy == null){ move();}
+        else{ attack(enemy);}
+    }
+    
+    /** Get enemy in nearby area, return Null if no avaliable enemy */
+    public Hero getEnemy(Board gameBoard) {
+        List<Tile> neighbors = gameBoard.getNeighbors(this.position);
+        ArrayList<Hero> enemyList = new ArrayList<Monster>();
+        for(int i = 0; i < neighbors.size(); i++){
+            TileRepresentable piece = neighbors.get(i).getPiece();
+            if(piece instanceof Hero){
+                enemyList.add((Hero) piece);
+            }
+        }
+        // If more than 1 hero, randomly attack 1.
+        if (enemyList.size()>1){
+            Random rand = new Random();
+            return enemyList.get(rand.nextInt(enemyList.size()));
+        }else if (enemyList.size()==1){
+            return enemyList.get(0);
+        }else{
+            return null;
+        }
+        return null; // This was necessary in case nothing was returned in the loops above
+    }
+    
     /** Attack a hero in battle */
     public void attack(BattleCharacter enemy){
         Hero hero = (Hero)enemy;
