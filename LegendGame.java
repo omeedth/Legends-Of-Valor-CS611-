@@ -142,6 +142,8 @@ public class LegendGame extends RpgGame{
     public void play(){
         // End the game if all heroes die
         do{
+            // Regain HP & Mana
+            this.team.regain();
             // Spawn new monster with current team level in monster Nexus every 8 turns
             if(this.turn>= 8){
                 this.monsterTeam = this.monsterList.extendTeam(this.monsterTeam,3,this.team.getLevel());
