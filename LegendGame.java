@@ -18,15 +18,15 @@ public class LegendGame extends RpgGame{
     protected MonsterCollect monsterList;
     
     protected LegendMarket market;
-    protected LegendTeam team;
-    protected LegendTeam monsterTeam;
+    protected HeroTeam team;
+    protected MonsterTeam monsterTeam;
     
     protected int turn; // Keep track number of turns to spawn monster
     
    /* Default constructor */
     LegendGame(){
         super();
-        this.team = new PlayerTeam();
+        this.team = new HeroTeam();
         this.turn = 0;
     }
     
@@ -36,8 +36,8 @@ public class LegendGame extends RpgGame{
         this.heroList = heroList;
         this.monsterList = monsterList;
         this.market = market;
-        this.team = new LegendTeam();
-        this.monsterTeam = new LegendTeam();
+        this.team = new HeroTeam();
+        this.monsterTeam = new MonsterTeam();
         this.turn = 0;
     }
 
