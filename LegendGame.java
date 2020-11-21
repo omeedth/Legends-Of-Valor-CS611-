@@ -140,7 +140,7 @@ public class LegendGame extends RpgGame{
     
     /** Play the game based on game rules */
     public void play(){
-        // End the game if all heroes die
+        boolean gameFlag = true; //Set to false when either team reach nexus of opponent
         do{
             // Regain HP & Mana
             this.team.regain();
@@ -155,13 +155,17 @@ public class LegendGame extends RpgGame{
             this.battle();
             // Count turns
             this.turn += 1;
+            // Check if win
+            if(this.team.isWin()){ gameFlag = false;}
+            else if(this.monsterTeam.isWin()){ gameFlag = false;}
             // NO NEED TO MOVE TEAM: MOVE FOR HERO & MONSTER SHOULD BE HANDLE INDIVIDUALLY
             /* Move team to new tile pos */
             // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
             //this.performTurn();
             /* Launch event on that tile */
             // this.event(); // EDITED - I switched to have this be incorporated in the performTurn() method
-        }while(this.team.isFaint()==false);
+        }while(gameFlag);
+        gameOver();
     }
     
     // public void event(){
@@ -274,40 +278,15 @@ public class LegendGame extends RpgGame{
         this.team.takeTurn(this.world);
         /* Let each monster take turn */
         this.monsterTeam.takeTurn(this.world);
-        
-        /*
-        System.out.println();
-        System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
-        System.out.println();
-        System.out.println("       \u001B[31m BATTLE START \u001B[0m");
-        System.out.println();
-        System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
-        System.out.println();
-        //int battleLevel = this.team.getLevel();
-        //MonsterTeam monsters = this.monsterList.generateTeam(this.team.size(), battleLevel);
-        //team.display();
-        monsters.display();
-        do{
-            this.team.takeTurn(monsters);
-            if(monsters.isFaint() == false) { monsters.takeTurn(this.team);}
-        }while(this.team.isFaint() == false && monsters.isFaint() == false);
-        // If player team win, get reward, else, game end
-        if(monsters.isFaint()){
-            this.team.win(battleLevel);
-        }else{
-            this.gameOver();
-        }
-         */
     }
     
     
-    /** When player team lose, game over */
+    /** GAMEOVER WHEN EITHER MONSTER OR PLAYER REACH NEXUS */
     public void gameOver(){
-        System.out.println("Your team was beaten by the monsters...");
         System.out.println();
         System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
         System.out.println();
-        System.out.println("       \u001B[31m GAME OVER \u001B[0m");
+        System.out.println("       \u001B[31m GAME END \u001B[0m");
         System.out.println();
         System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
         System.out.println();
