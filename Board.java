@@ -7,6 +7,8 @@
 
 /* External Imports */
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.List;
@@ -24,6 +26,9 @@ public class Board {
     private Tile[][] tiles;
     private int width, height;
 
+    // Board Info - TODO: Consider making a class BoardInfo.java to contain all of this info and return those objects
+    public List<Tile> disconnectedGraphs;
+
     /* Constructors */
 
     public Board(int width, int height) {
@@ -31,6 +36,9 @@ public class Board {
         this.setWidth(width);
         this.setHeight(height);
         tiles = new Tile[this.width][this.height];
+
+        // Initializing BoardInfo Variables
+        disconnectedGraphs = new ArrayList<>();
     }
 
     public Board(int dimensions) {
@@ -136,11 +144,147 @@ public class Board {
 
     /* Logic Methods */
 
+    // Coordinate2D of where the piece is on the board right now
     public List<Tile> getPossibleTeleportTiles(Coordinate2D coordinates) {
         // Get all Tile objects in:
         //  1. Different Lanes
         //  2. Tile objects the below the farthest point a Hero object has explored in a lane
-        return null;
+
+        // TODO: add a variables or parameters for if you want to rerun BFS to update the Board info with certain blacklisted tiles
+        Set<Class<? extends Tile>> blackListedTileTypes = new HashSet<>();
+        blackListedTileTypes.add(InaccessibleTile.class);
+
+        // Ensuring we know the disconnected graphs that exist
+        if (disconnectedGraphs.size() == 0) {            
+            BFS(blackListedTileTypes);
+        }
+
+        List<Tile> possibleTeleportTiles = new ArrayList<>();
+
+        // Go through each disconnected graph and 
+        for (Tile startTile : disconnectedGraphs) {
+
+            // Figure out if the coordinates passed in exist in the sub graph
+            List<Tile> exploredTiles = simpleBFS(startTile, blackListedTileTypes, (tile) -> {
+                return tile.getCoords().equals(coordinates);
+            });
+
+            // The hero is in this current subgraph (The last explored tile would be the tile where we found the Tile at coordinates)
+            if (exploredTiles.get(exploredTiles.size() - 1).getCoords().equals(coordinates)) {
+                /* DEBUGGING */
+                // System.out.println("Disconnected Graph: " + startTile + " contained the coordinate!");
+                /*-----------*/
+                continue;
+            }
+
+            /* DEBUGGING */
+            // System.out.println("\n");
+            // System.out.println(PrintUtility.listToString(exploredTiles,false));
+            /*-----------*/
+
+            // Otherwise add all the Tile objects in the subgraph as 
+            possibleTeleportTiles.addAll(exploredTiles);
+
+        }
+
+        // TODO: Replace "farthestExplored" with the Hero object's actual farthest explored Coordinate2D
+        // Coordinate2D farthestExplored = new Coordinate2D(0,4); // Hard Coded Variable
+        // return possibleTeleportTiles.stream().filter(tile -> tile.getCoords().getY() <= farthestExplored.getY()).collect(Collectors.toList());
+
+        return possibleTeleportTiles;
+    }
+
+    // Coordinate2D of where the piece is on the board right now
+    public List<Tile> getPossibleTeleportTiles(Tile tile) {
+        return getPossibleTeleportTiles(tile.getCoords());
+    }
+
+    // Does not account for disconnected graphs
+    public List<Tile> simpleBFS(Tile startTile, Set<Class<? extends Tile>> blackListedTileTypes, Function<Tile,Boolean> stopCondition) {
+        // Keep track of all visited Tile objects
+        Set<Tile> visited = new HashSet<Tile>();
+        return bfsHelper(startTile, visited, blackListedTileTypes, stopCondition);
+    }
+
+    public List<Tile> simpleBFS(Tile startTile, Set<Class<? extends Tile>> blackListedTileTypes) {
+        return simpleBFS(startTile, blackListedTileTypes, null);
+    }
+
+    // Get's all disconnected graphs
+    public void BFS(Set<Class<? extends Tile>> blackListedTileTypes) {
+        // Keep track of all visited Tile objects
+        Set<Tile> visited = new HashSet<Tile>();
+
+        // Go through every Tile in the graph
+        for (int row = 0; row < this.width; row++) {
+            for (int col = 0; col < this.height; col++) {
+                Tile startTile = this.get(col,row);
+                if (!blackListedTileTypes.contains(startTile.getClass()) && !visited.contains(startTile)) {
+                    disconnectedGraphs.add(startTile);
+                    bfsHelper(startTile, visited, blackListedTileTypes, null);
+                }
+            }
+        }
+    }
+
+    // Does not work for disconnected graphs
+    public List<Tile> bfsHelper(Tile start, Set<Tile> visited, Set<Class<? extends Tile>> blackListedTileTypes, Function<Tile,Boolean> stopCondition) {
+
+        // Create a list of explored Tile objects
+        List<Tile> exploredTiles = new ArrayList<Tile>();        
+        visited.add(start);
+
+        // If there are no Tiles to avoid or prioritize then just return a random point on the board
+        if (stopCondition != null && stopCondition.apply(start)) {
+            exploredTiles.add(start);
+            return exploredTiles;
+        }
+
+        // Run BFS until we have satisfied the stopCondition
+        boolean stopConditionMet = false;
+        // Set<Tile> visited = new HashSet<Tile>();
+        Queue<Tile> toVisit = new LinkedList<Tile>();
+        toVisit.add(start);        
+
+        while (!toVisit.isEmpty() && !stopConditionMet) {
+            
+            // The current Tile we are visiting
+            Tile tile = toVisit.poll();
+
+            // Don't look through blacklisted tiles
+            if (blackListedTileTypes.contains(tile.getClass())) {
+                continue;
+            }
+
+            // Add the current tile as one we explored
+            exploredTiles.add(tile);
+
+            /* DEBUGGING */
+            // System.out.println(tile);
+            /*-----------*/
+
+            // Check if current tile is a desired tile (in the set of tiles and we are NOT avoiding them) or it's not blackListed, and exit if so
+            // (tileTypes.contains(tile.getClass()) && !avoidTileTypes) || (!tileTypes.contains(tile.getClass()) && avoidTileTypes)
+            if (stopCondition != null && stopCondition.apply(tile)) {
+                stopConditionMet = true;
+                continue;
+            }
+
+            // Get neighbors (valid coordinates up, right, down, left)
+            List<Tile> neighbors = getNeighbors(tile);
+
+            // Go through each unvisited neighbor and add it into the toVisit queue
+            for (Tile neighbor : neighbors) {
+                if (!visited.contains(neighbor)) {                    
+                    toVisit.add(neighbor);
+                    visited.add(neighbor);
+                }
+            }
+
+        }
+
+        return exploredTiles;
+
     }
 
     public Coordinate2D getLocationOnBoard(Set<Class<? extends Tile>> tileTypes, boolean avoidTileTypes) {
@@ -162,7 +306,10 @@ public class Board {
         boolean foundTile = false;
         Set<Tile> visited = new HashSet<Tile>();
         Queue<Tile> toVisit = new LinkedList<Tile>();
-        toVisit.add(this.get(ret));        
+        toVisit.add(this.get(ret));  
+        
+        // Visit the first tile
+        visited.add(this.get(ret));
 
         while (!toVisit.isEmpty() && !foundTile) {
             
@@ -192,6 +339,7 @@ public class Board {
             for (Tile neighbor : neighbors) {
                 if (!visited.contains(neighbor)) {
                     toVisit.add(neighbor);
+                    visited.add(neighbor);
                 }
             }
 
