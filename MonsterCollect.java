@@ -29,6 +29,16 @@ public class MonsterCollect{
      * @param int level, level of monsters in team
      */
     public LegendTeam generateTeam(int num, int level){
+        LegendTeam team = new LegendTeam();
+        return extendTeam(num,level);
+    }
+    
+    /**
+     * Add new monster to exist team
+     * @param int num, number of new monsters in team
+     * @param int level, level of new monsters in team
+     */
+    public LegendTeam extendTeam(LegendTeam team, int num, int level){
         ArrayList<Monster> mList = new ArrayList<Monster>();
         // Generate a list of selectable monsters according to level
         for(Dragon d: this.dragons){
@@ -47,7 +57,6 @@ public class MonsterCollect{
             }
         }
         // Randomly add monsters to team
-        LegendTeam team = new LegendTeam();
         for (int i=0;i<num;i++){
             team.addMember(mList.get(new Random().nextInt(mList.size())));
         }
