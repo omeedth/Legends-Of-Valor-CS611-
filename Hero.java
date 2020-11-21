@@ -512,6 +512,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     
     /** Revive with half HP */
     public void revive(){
+        this.back();
         this.HP = this.level*50;
     }
     
