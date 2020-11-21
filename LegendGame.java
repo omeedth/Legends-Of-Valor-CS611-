@@ -142,13 +142,21 @@ public class LegendGame extends RpgGame{
     public void play(){
         // End the game if all heroes die
         do{
+            // Spawn new monster with current team level in monster Nexus every 8 turns
+            if(this.turn>= 8){
+                this.monsterTeam = this.monsterTeam.generateTeam(3, this.team.getLevel());
+                this.turns = 0;
+            }
             /* Show world map before move */
             this.world.displayMap();
-            /* All alive Hero & monsters take action */
+            // All alive Hero & monsters take action
             this.battle();
+            // Count turns
+            this.turn += 1;
+            // NO NEED TO MOVE TEAM: MOVE FOR HERO & MONSTER SHOULD BE HANDLE INDIVIDUALLY
             /* Move team to new tile pos */
             // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
-            this.performTurn();
+            //this.performTurn();
             /* Launch event on that tile */
             // this.event(); // EDITED - I switched to have this be incorporated in the performTurn() method
         }while(this.team.isFaint()==false);
