@@ -18,12 +18,16 @@ public class LegendGame extends RpgGame{
     protected MonsterCollect monsterList;
     
     protected LegendMarket market;
-    protected PlayerTeam team;
+    protected LegendTeam team;
+    protected LegendTeam monsterTeam;
+    
+    protected int turn; // Keep track number of turns to spawn monster
     
    /* Default constructor */
     LegendGame(){
         super();
         this.team = new PlayerTeam();
+        this.turn = 0;
     }
     
     /* Default constructor */
@@ -32,7 +36,9 @@ public class LegendGame extends RpgGame{
         this.heroList = heroList;
         this.monsterList = monsterList;
         this.market = market;
-        this.team = new PlayerTeam();
+        this.team = new LegendTeam();
+        this.monsterTeam = new LegendTeam();
+        this.turn = 0;
     }
 
     /** Display welcome message before game start */
@@ -125,6 +131,9 @@ public class LegendGame extends RpgGame{
         Tile startTile = this.world.get(generatedPoint);
         this.team.move(startTile);
         startTile.setPiece(this.team);
+        
+        /* Generate monster team of size 3 */
+        this.monsterTeam = this.monsterList.generateTeam(3, this.team.getLevel());
 
     }
     
@@ -135,6 +144,8 @@ public class LegendGame extends RpgGame{
         do{
             /* Show world map before move */
             this.world.displayMap();
+            /* All alive Hero & monsters take action */
+            this.battle();
             /* Move team to new tile pos */
             // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
             this.performTurn();
@@ -242,12 +253,19 @@ public class LegendGame extends RpgGame{
         }while(loop);
     }
     
+    
     /**
      * Battle in game
-     * Generate a random team of monsters of same size as playerTeam, and match level of team
-     * Take turns until either team faint
+     * Each alive hero and monster take their turns
      */
+    
     public void battle(){
+        /* Let each member in team take turn */
+        this.team.takeTurn(this.world);
+        /* Let each monster take turn */
+        this.monsterTeam.takeTurn(this.world);
+        
+        /*
         System.out.println();
         System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
         System.out.println();
@@ -255,9 +273,9 @@ public class LegendGame extends RpgGame{
         System.out.println();
         System.out.println(" \u001B[31m ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ \u001B[0m ");
         System.out.println();
-        int battleLevel = this.team.getLevel();
-        MonsterTeam monsters = this.monsterList.generateTeam(this.team.size(), battleLevel);
-        team.display();
+        //int battleLevel = this.team.getLevel();
+        //MonsterTeam monsters = this.monsterList.generateTeam(this.team.size(), battleLevel);
+        //team.display();
         monsters.display();
         do{
             this.team.takeTurn(monsters);
@@ -269,7 +287,9 @@ public class LegendGame extends RpgGame{
         }else{
             this.gameOver();
         }
+         */
     }
+    
     
     /** When player team lose, game over */
     public void gameOver(){
@@ -285,7 +305,7 @@ public class LegendGame extends RpgGame{
     }
 
     /* ADDED CODE (CODE FOR THE TURN) */
-
+    /*
     public void performTurn() {
         // TODO:
         //  1. have player move to a different tile
@@ -357,7 +377,7 @@ public class LegendGame extends RpgGame{
         System.out.println();
 
     }
-    
+    */
     /*--------------------------------*/
     
     /** Move team on the world map */
@@ -569,7 +589,6 @@ public class LegendGame extends RpgGame{
         for (int col = 0; col < w; col++) {
             tileIds[h-1][col + horizontalOffset] = NEXUS_TILE_ID;
         }
-
         return tileIds;
     }
 
