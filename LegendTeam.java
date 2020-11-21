@@ -21,6 +21,8 @@ public class LegendTeam extends Team{
             BattleCharactor c = (BattleCharactor)this.members.get(i);
             if(c.isAlive()){
                 c.action(Board gameBoard);
+            }else if(c instanceof Hero){
+                c.revive();
             }
         }
     }
