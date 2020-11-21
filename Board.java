@@ -147,8 +147,9 @@ public class Board {
     // Coordinate2D of where the piece is on the board right now
     public List<Tile> getPossibleTeleportTiles(Coordinate2D coordinates) {
         // Get all Tile objects in:
-        //  1. Different Lanes
-        //  2. Tile objects the below the farthest point a Hero object has explored in a lane
+        //  1. Different Lanes (Only one lane at a time AKA teleporting from TOP to BOT is NOT allowed) TODO: Incomplete
+        //  2. Tile objects the below the farthest point a Hero object has explored in a lane           TODO: Incomplete
+        //  3. Tile objects below ALL monsters or on the same level                                     TODO: Incomplete
 
         // TODO: add a variables or parameters for if you want to rerun BFS to update the Board info with certain blacklisted tiles
         Set<Class<? extends Tile>> blackListedTileTypes = new HashSet<>();
@@ -406,7 +407,66 @@ public class Board {
 
     /* Named displayMap so it fits with the preexisting code */
     public void displayMap() {
-        System.out.println(this.toString());
+
+        // Format the String
+        String res = "";
+
+        // Top portion of the Board
+        for (int col = 0; col < this.getWidth(); col++) {
+            res += "+---------";
+        }
+        res += "+\n";
+
+        for (int row = 0; row < this.getHeight(); row++) {
+
+            res += "\n";
+
+            // Middle portion of Board containing the actual tile values
+            for (int col = 0; col < this.getWidth(); col++) {                
+
+                Tile tile = this.tiles[row][col];
+                res += "|    ";
+
+                if (tile == null) {
+                    res += NULL_TILE_CHARACTER; // Character for null Tiles
+                }
+
+                // Show the piece on the tile (First one)
+                else if (!tile.isEmpty()) {
+                    res += String.format(Ansi.colorize("%c", Attribute.GREEN_TEXT()), tile.getPiece().represent());
+                }
+
+                // If no pieces on the tiles, show the representation of the tile
+                else {
+
+                    if (tile instanceof PlainTile) {
+                        res += String.format(Ansi.colorize("%c", Attribute.GREEN_TEXT()), tile.toCharacter());
+                    } else if (tile instanceof InaccessibleTile) {
+                        res += String.format(Ansi.colorize("%c", Attribute.RED_TEXT()), tile.toCharacter());
+                    } else if (tile instanceof NexusTile) {
+                        res += String.format(Ansi.colorize("%c", Attribute.YELLOW_TEXT()), tile.toCharacter());
+                    } else {
+                        res += String.format("%c", tile.toCharacter());
+                    }
+
+                }                
+
+                res += "    ";
+
+            }
+            res += "|\n\n";
+
+            // Bottom portion of the row
+            for (int col = 0; col < this.getWidth(); col++) {
+                res += "+---------";
+            }
+            res += "+\n";
+
+        }
+
+        // Print it out
+        System.out.println(res);
+
     }
 
     @Override
