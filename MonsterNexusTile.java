@@ -25,11 +25,4 @@ public class MonsterNexusTile extends NexusTile {
 
     /* Logic Methods */
 
-    @Override
-    public void interact(Object obj) {
-        // TODO: Nexus Code:
-        //          1. (If Hero - Heroes Win)
-        //          2. Spawn's Monsters
-    }
-
 }

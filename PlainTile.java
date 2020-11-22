@@ -17,7 +17,7 @@ import jcolor.Attribute;
 public class PlainTile extends Tile implements Interactable {
     
     /* Static Members */
-    public static char TILE_CHAR = ' ';
+    public static char TILE_CHAR = 'P';
     // public static double ENCOUNTER_CHANCE = .4;
 
     /* Data Members */

@@ -19,6 +19,7 @@ public class LegendsOfValorBoard {
     public static final int DEFAULT_NUM_LANES = 1;
     public static final int DEFAULT_BUFFER_SIZE_BETWEEN_LANES = 1;
     public static final int DEFAULT_BUFFER_TILE_ID = TileFactory.INACCESSIBLE;
+    public static final char DEFAULT_BUFFER_CHAR = 'I';
 
     public static final int DEFAULT_LANE_WIDTH = 2;
     public static final int DEFAULT_LANE_HEIGHT = 8;
@@ -34,9 +35,9 @@ public class LegendsOfValorBoard {
 
     /* Constructors */
 
-    public LegendsOfValorBoard(int numLanes, int laneWidth, int laneHeight/*, int sizeBufferBetweenLanes*/, int bufferTileID) {
+    public LegendsOfValorBoard(int laneWidth, int laneHeight/*, int sizeBufferBetweenLanes*/, int bufferTileID) {
         /* Empty Board */
-        this.lanes = new ArrayList<Lane>(numLanes);
+        this.lanes = new ArrayList<Lane>();
         setLaneWidth(laneWidth);
         setLaneHeight(laneHeight);
 
@@ -45,7 +46,7 @@ public class LegendsOfValorBoard {
     }
 
     public LegendsOfValorBoard() {
-        this(DEFAULT_NUM_LANES, DEFAULT_LANE_WIDTH, DEFAULT_LANE_HEIGHT/*, DEFAULT_BUFFER_SIZE_BETWEEN_LANES*/, DEFAULT_BUFFER_TILE_ID);
+        this(DEFAULT_LANE_WIDTH, DEFAULT_LANE_HEIGHT/*, DEFAULT_BUFFER_SIZE_BETWEEN_LANES*/, DEFAULT_BUFFER_TILE_ID);
     }
 
     /* Accessor Methods */
@@ -165,6 +166,142 @@ public class LegendsOfValorBoard {
         String res = "";
 
         // Create LegendsOfValorBoard String
+        for (int row = 0; row < this.laneHeight; row++) {
+
+            for (int laneIndex = 0; laneIndex < this.lanes.size(); laneIndex++) {
+                Lane lane = this.lanes.get(laneIndex);
+    
+                // Top - Outer tile character
+                for (int col = 0; col < lane.getWidth(); col++) {
+                    Tile tile = lane.get(col,row);
+    
+                    for (int i = 0; i < 3; i++) {
+                        res += tile.toCharacter();
+                        if (i != 2) {
+                            res += "--";
+                        } else {
+                            res += " ";
+                        }
+                    }
+    
+                }    
+                
+                // Buffer Tiles
+                if (laneIndex != this.lanes.size() - 1) {
+                    // Top - Outer tile character
+                    for (int i = 0; i < 3; i++) {
+                        res += DEFAULT_BUFFER_CHAR;
+                        if (i != 2) {
+                            res += "--";
+                        } else {
+                            res += " ";
+                        }
+                    }
+                }                 
+    
+            }
+            res += "\n";
+
+            for (int laneIndex = 0; laneIndex < this.lanes.size(); laneIndex++) {
+                Lane lane = this.lanes.get(laneIndex);
+
+                // Middle - Empty
+                for (int col = 0; col < lane.getWidth(); col++) {
+                    res += "|     | ";
+                }
+
+                // Buffer Tiles
+                if (laneIndex != this.lanes.size() - 1) {
+                    res += "|     | ";
+                }
+
+            }
+            res += "\n";
+
+            for (int laneIndex = 0; laneIndex < this.lanes.size(); laneIndex++) {
+                Lane lane = this.lanes.get(laneIndex);
+
+                // Middle - Inner tile character
+                for (int col = 0; col < lane.getWidth(); col++) {
+                    Tile tile = lane.get(col,row);
+    
+                    res += tile.toCharacter() + "  ";
+    
+                    if (tile.isEmpty()) {
+                        res += " ";
+                    } else {
+                        // Shows Piece on that Tile
+                        res += tile.getPiece().represent();
+                    }                    
+                    res += "  ";
+    
+                    res += tile.toCharacter() + " ";
+    
+                }  
+                
+                // Buffer Tiles
+                if (laneIndex != this.lanes.size() - 1) {
+                    // Middle - Inner tile character
+                    res += DEFAULT_BUFFER_CHAR + " XXX " + DEFAULT_BUFFER_CHAR + " ";
+                }                
+
+            }
+            res += "\n";
+
+            for (int laneIndex = 0; laneIndex < this.lanes.size(); laneIndex++) {
+                Lane lane = this.lanes.get(laneIndex);
+
+                // Middle - Empty
+                for (int col = 0; col < lane.getWidth(); col++) {
+                    res += "|     | ";
+                }   
+                
+                // Buffer Tiles
+                if (laneIndex != this.lanes.size() - 1) {
+                    res += "|     | ";
+                }
+
+            }
+            res += "\n";
+
+            for (int laneIndex = 0; laneIndex < this.lanes.size(); laneIndex++) {
+                Lane lane = this.lanes.get(laneIndex);
+
+                // Bottom - Outer tile character
+                for (int col = 0; col < lane.getWidth(); col++) {
+                    Tile tile = lane.get(col,row);
+    
+                    for (int i = 0; i < 3; i++) {
+                        res += tile.toCharacter();
+                        if (i != 2) {
+                            res += "--";
+                        } else {
+                            res += " ";
+                        }
+                    }
+    
+                }  
+                
+                // Buffer Tiles
+                if (laneIndex != this.lanes.size() - 1) {
+                    // Top - Outer tile character
+                    for (int i = 0; i < 3; i++) {
+                        res += DEFAULT_BUFFER_CHAR;
+                        if (i != 2) {
+                            res += "--";
+                        } else {
+                            res += " ";
+                        }
+                    }
+                } 
+
+            }
+            res += "\n";
+
+            // After each row
+            res += "\n";
+
+        }
 
         return res;
 

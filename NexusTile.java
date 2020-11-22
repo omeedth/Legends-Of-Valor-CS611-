@@ -7,12 +7,10 @@
  */
 
 /* External Imports */
-import java.util.List;
-import java.util.Scanner;
 
 /* Internal Imports */
 
-public abstract class NexusTile extends Tile implements Interactable {
+public abstract class NexusTile extends Tile {
     
     /* Static Members */
     public static char TILE_CHAR = 'N';
@@ -30,12 +28,5 @@ public abstract class NexusTile extends Tile implements Interactable {
     /* Mutator Methods */
 
     /* Logic Methods */
-
-    @Override
-    public void interact(Object obj) {
-        // TODO: Nexus Code:
-        //          1. (If Hero run Market Code)
-        //          2. Spawn's Heroes and Monsters
-    }
 
 }
