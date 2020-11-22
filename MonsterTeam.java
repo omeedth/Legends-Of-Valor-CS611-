@@ -10,7 +10,7 @@ import java.util.*;
 public class MonsterTeam extends Team{
     
    /* Default constructor */
-    LegendTeam(){
+    MonsterTeam(){
         super();
     }
     
@@ -20,7 +20,7 @@ public class MonsterTeam extends Team{
             // For each member alive, take action
             Monster m = (Monster)this.members.get(i);
             if(m.isAlive()){
-                m.action(Board gameBoard);
+                m.action(gameBoard);
             }
         }
     }
@@ -33,7 +33,7 @@ public class MonsterTeam extends Team{
         System.out.println("ID   Level   Name                    HP      Defense       Damage");
         System.out.println("------------------------------------------------------------------------------");
         for(int i=0;i<this.members.size();i++){
-            BattleCharactor c = (BattleCharactor)this.members.get(i);
+            Monster c = (Monster)this.members.get(i);
             System.out.print((i+1)+"     ");
             c.display();
         }
@@ -54,7 +54,7 @@ public class MonsterTeam extends Team{
     /** If the position on board is of type Hero nexus, win */
     public boolean isWin(Board gameBoard){
         for(Character c: this.members){
-            if(gameBoard.getTile(c.getPos()) instanceof HeroNexusTile){
+            if(gameBoard.getTile(c.getPos()) instanceof HeroNexus){
                 System.out.println("------------ ❈ ❈ ❈ ❈ ❈ ❈ --------------");
                 System.out.println("\u001B[35m Monster Reaches Hero Nexus \u001B[0m");
                 System.out.println("       \u001B[35m HERO LOSE \u001B[0m");

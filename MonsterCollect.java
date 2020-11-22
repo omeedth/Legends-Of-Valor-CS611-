@@ -28,9 +28,9 @@ public class MonsterCollect{
      * @param int num, number of monsters in team
      * @param int level, level of monsters in team
      */
-    public LegendTeam generateTeam(int num, int level){
-        LegendTeam team = new LegendTeam();
-        return extendTeam(num,level);
+    public MonsterTeam generateTeam(int num, int level){
+        MonsterTeam team = new MonsterTeam();
+        return extendTeam(team, num,level);
     }
     
     /**
@@ -38,7 +38,7 @@ public class MonsterCollect{
      * @param int num, number of new monsters in team
      * @param int level, level of new monsters in team
      */
-    public LegendTeam extendTeam(LegendTeam team, int num, int level){
+    public MonsterTeam extendTeam(MonsterTeam team, int num, int level){
         ArrayList<Monster> mList = new ArrayList<Monster>();
         // Generate a list of selectable monsters according to level
         for(Dragon d: this.dragons){

@@ -40,8 +40,8 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     }
     
     /** User defined constructor */
-    Hero(String name, int exp, double mana, double str, double dex, double agi, double coins, Coordinate2D nexus){
-        super(name, 1, 0, nexus); // Start pos = nexus
+    Hero(String name, int exp, double mana, double str, double dex, double agi, double coins){
+        super(name, 1, 0); // Start pos = nexus
         this.exp = exp;
         this.coins = coins;
         this.mana = mana;
@@ -49,9 +49,14 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         this.dex = dex;
         this.agi = agi;
         this.inventory = new Inventory();
-        this.nexus = nexus;
       }
 
+    // Set original pos of hero
+    public void spawn(Coordinate2D nexus){
+        this.setPos(nexus);
+        this.nexus = nexus;
+    }
+    
     /** GET METHODS */
     public double getCoins(){ return this.coins;}
     public double getMana(){ return this.mana;}

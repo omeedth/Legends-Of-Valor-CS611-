@@ -127,13 +127,12 @@ public class LegendGame extends RpgGame{
             System.out.println(this.world);
             throw new IllegalArgumentException("The map had no valid starting location for the party!");
         }
-
-        Tile startTile = this.world.get(generatedPoint);
-        this.team.move(startTile);
-        startTile.setPiece(this.team);
-        
+        //Tile startTile = this.world.get(generatedPoint);
+        //this.team.move(startTile);
+        //startTile.setPiece(this.team);
         /* Generate monster team of size 3 */
         this.monsterTeam = this.monsterList.generateTeam(3, this.team.getLevel());
+        // PLACE EACH HERO AND MONSTER SEPERATELY, NOT AS TEAM
 
     }
     
@@ -145,9 +144,9 @@ public class LegendGame extends RpgGame{
             // Regain HP & Mana
             this.team.regain();
             // Spawn new monster with current team level in monster Nexus every 8 turns
-            if(this.turn>= 8){
+            if(this.turn >= 8){
                 this.monsterTeam = this.monsterList.extendTeam(this.monsterTeam,3,this.team.getLevel());
-                this.turns = 0;
+                this.turn = 0;
             }
             /* Show world map before move */
             this.world.displayMap();
@@ -665,11 +664,10 @@ public class LegendGame extends RpgGame{
         return id;
     }
 
-    private boolean validMove(String directionCharacter) {
+    private boolean validMove(Coordinate2D currentCoords, String directionCharacter) {
         String standardDirectionChar = directionCharacter.toLowerCase();
         boolean result = false;
-
-        Coordinate2D currentCoords = this.team.getCoords();
+        //Coordinate2D currentCoords = this.team.getCoords();
         Tile currTile = this.world.get(currentCoords);
         Coordinate2D destination = null;
         Tile destinationTile = null;
