@@ -23,7 +23,6 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     protected Weapon weapon;
     protected Armor armor;
     
-    protected Coordinate2D nexus;
 
    
     /** Default Constructor **/
@@ -51,11 +50,7 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         this.inventory = new Inventory();
       }
 
-    // Set original pos of hero
-    public void spawn(Coordinate2D nexus){
-        this.setPos(nexus);
-        this.nexus = nexus;
-    }
+
     
     /** GET METHODS */
     public double getCoins(){ return this.coins;}

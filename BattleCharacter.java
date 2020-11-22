@@ -8,6 +8,8 @@ public abstract class BattleCharacter extends Character {
     protected double HP;
     protected int level;
     protected double defense;
+    
+    protected Coordinate2D nexus;
    
     /** Default constructor */
     BattleCharacter() {
@@ -27,6 +29,12 @@ public abstract class BattleCharacter extends Character {
         this.defense = defense;
     }
 
+    // Set original pos of hero
+    public void spawn(Coordinate2D nexus){
+        this.setPos(nexus);
+        this.nexus = nexus;
+    }
+    
     /** Take action based on rule */
     public abstract void action(Board gameBoard);
     

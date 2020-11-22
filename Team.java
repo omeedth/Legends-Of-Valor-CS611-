@@ -42,4 +42,16 @@ public abstract class Team {
     public int size(){
         return this.members.size();
     }
+    
+    /** Spawn each team member on the nexus*/
+    public void spawn(List<NexusTile> nexus){
+        if(nexus.size() != this.members.size()){
+            System.out.println("No enough space to spawn!");
+        }else{
+            for(int i=0;i<nexus.size();i++){
+                BattleCharacter c = (BattleCharacter)this.members.get(i);
+                c.spawn(nexus.get(i).getCoords());
+            }
+        }
+    }
 }
