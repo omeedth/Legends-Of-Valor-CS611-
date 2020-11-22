@@ -14,7 +14,7 @@ public abstract class Market{
     }
 
     /** Welcome information for a player controled team entering the market */
-    public void welcome(PlayerTeam team){
+    public void welcome(HeroTeam team){
         System.out.println();
         System.out.println("\u001B[32m------------ ❈ ❈ ❈ ❈ ❈ ❈ --------------");
         System.out.println();

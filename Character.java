@@ -14,9 +14,8 @@ public abstract class Character{
     }
     
     /* User defined constructor */
-    Character(String name, Coordinate2D position){
+    Character(String name){
         this.name = name;
-        this.position = position;
     }
     
     /**

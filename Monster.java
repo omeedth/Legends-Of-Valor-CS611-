@@ -20,7 +20,7 @@ public abstract class Monster extends BattleCharacter{
     }
     
     Monster(String name, int level,double baseDamage, double defense, double dodgeChance){
-        super(name, level, defense, new Coordinate2D());    // TODO: Add Coordinates to constructor calls for when you are calling super() I ADDED THIS SO MY CODE WILL COMPILE
+        super(name, level, defense);
         this.baseDamage = baseDamage;
         this.dodgeChance = dodgeChance;
     }
