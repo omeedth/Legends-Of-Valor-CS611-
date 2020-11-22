@@ -574,14 +574,51 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         return 'H';
     }
 
-    // Move to a new destination
-    @Override
-    public void move(Tile destination) {
-        // TODO Auto-generated method stub
-        if (destination != null && destination.isEmpty()) {
-            // Assuming this destination is valid
-            this.setPos(destination.getCoords());
-        }        
+    // Move on the lane
+    public void move(Board board) {
+        String moveKey;
+        Scanner in = new Scanner(System.in);
+        boolean loop = true;
+        do{
+            moveKey = in.nextLine();
+            if(moveKey.equals("W")||moveKey.equals("w")){
+                Coordinate2D newPos = new Coordinate2D();
+                if(newPos){
+                    System.out.print("Invalid place to move, please try a different move:");
+                }else{
+                    this.position.setY(this.position.getY()-1);
+                    loop = false;
+                }
+            }else if(moveKey.equals("A")||moveKey.equals("a")){
+                if(teamX <= 0){
+                    System.out.print("Reach left edge of the world, please try a different move:");
+                }else{
+                    this.position.setX(this.position.getX()-1);
+                    loop = false;
+                }
+            }else if(moveKey.equals("S")||moveKey.equals("s")){
+                if(teamY >= this.world.getHeight()){
+                    System.out.print("Reach bottom edge of the world, please try a different move:");
+                }else{
+                    this.position.setY(this.position.getY()+1);
+                    loop = false;
+                }
+            }else if(moveKey.equals("D")||moveKey.equals("d")){
+                if(teamX >= this.world.getWidth()){
+                    System.out.print("Reach right edge of the world, please try a different move:");
+                }else{
+                    this.position.setX(this.position.getX()+1);
+                    loop = false;
+                }
+            }else if(moveKey.equals("Q")||moveKey.equals("q")){
+                System.exit(0);
+            }else if(moveKey.equals("I")||moveKey.equals("i")){
+                this.team.display();
+                System.out.print("Please make your move:");
+            }else{
+                System.out.print("Invalid input, please use W/A/S/D:");
+            }
+        }while(loop);
     }
 
     /* Methods To add (Specific to Legends of Valor) */
