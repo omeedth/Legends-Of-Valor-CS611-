@@ -64,13 +64,29 @@ public class HeroTeam extends Team{
         return level;
     }
     
-    /** Return true if no monster alive */
+    /** Return true if no hero alive */
     public boolean isFaint(){
-        for(BattleCharacter c: this.members){
-            if(c.isAlive()){
+        for(Character c: this.members){
+            BattleCharacter hero = (BattleCharacter)c;
+            if(hero.isAlive()){
                 return false;
             }
         }
         return true;
+    }
+ 
+    // MAY NOT COMPILE YET
+    /** If the position on board is of type Hero nexus, win */
+    public boolean isWin(Board gameBoard){
+        for(Character c: this.members){
+            if(gameBoard.getTile(c.getPos()) instanceof MonsterNexusTile){
+                System.out.println("------------ ❈ ❈ ❈ ❈ ❈ ❈ --------------");
+                System.out.println("\u001B[35m Reaches Monster Nexus \u001B[0m");
+                System.out.println("       \u001B[35m HERO WIN \u001B[0m");
+                System.out.println("------------ ❈ ❈ ❈ ❈ ❈ ❈ --------------");
+                return true;
+            }
+        }
+        return false;
     }
 }

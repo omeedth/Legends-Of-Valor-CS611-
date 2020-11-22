@@ -156,8 +156,8 @@ public class LegendGame extends RpgGame{
             // Count turns
             this.turn += 1;
             // Check if win
-            if(this.team.isWin()){ gameFlag = false;}
-            else if(this.monsterTeam.isWin()){ gameFlag = false;}
+            if(this.team.isWin(this.world)){ gameFlag = false;}
+            else if(this.monsterTeam.isWin(this.world)){ gameFlag = false;}
             // NO NEED TO MOVE TEAM: MOVE FOR HERO & MONSTER SHOULD BE HANDLE INDIVIDUALLY
             /* Move team to new tile pos */
             // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
