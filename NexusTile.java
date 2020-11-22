@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /* Internal Imports */
 
-public class NexusTile extends Tile implements Interactable {
+public abstract class NexusTile extends Tile implements Interactable {
     
     /* Static Members */
     public static char TILE_CHAR = 'N';
