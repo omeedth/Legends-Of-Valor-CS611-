@@ -25,9 +25,8 @@ public abstract class Team {
     }
     
     /** Get member from the team by index */
-    public Character getMember(int index){
-        return this.members.get(index);
-    }
+    public Character getMember(int index){ return this.members.get(index);}
+    public ArrayList<Character> getMembers(){ return this.members;}
     
     /** Remove member from the team by member */
     public void removeMember(Character member){
@@ -53,5 +52,10 @@ public abstract class Team {
                 c.spawn(nexus.get(i).getCoords());
             }
         }
+    }
+    
+    /** Extend the team with another team */
+    public void joinTeam(Team aTeam){
+        this.members.addAll(aTeam.getMembers());
     }
 }

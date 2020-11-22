@@ -149,7 +149,12 @@ public class LegendGame extends RpgGame{
             this.team.regain();
             // Spawn new monster with current team level in monster Nexus every 8 turns
             if(this.turn >= 8){
-                this.monsterTeam = this.monsterList.extendTeam(this.monsterTeam,3,this.team.getLevel());
+                // Generate new team of monsters
+                MonsterTeam newTeam = this.monsterList.generateTeam(3,this.team.getLevel());
+                // Spawn monsters in new team
+                //newTeam.spawn(nexusList);
+                // Join the new spawned monsters with exist monster
+                this.monsterTeam.joinTeam(newTeam);
                 this.turn = 0;
             }
             /* Show world map before move */
