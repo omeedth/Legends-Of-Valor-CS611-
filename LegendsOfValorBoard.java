@@ -147,7 +147,7 @@ public class LegendsOfValorBoard {
             /*-----------*/
 
             // Otherwise add all the Tile objects in the subgraph as 
-            List<Tile> exploredTiles = lane.getTilesAsList(blackListedTileTypes); // .stream().filter((tile) -> tile.getCoords().getY() <= lane.getFrontierCoordinate().getY()).collect(Collectors.toList())
+            List<Tile> exploredTiles = lane.getTilesAsList(blackListedTileTypes).stream().filter((tile) -> tile.getCoords().getY() <= lane.getFrontierCoordinate().getY()).collect(Collectors.toList());
             possibleTeleportTiles.addAll(exploredTiles);
 
         }        

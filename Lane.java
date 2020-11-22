@@ -58,6 +58,11 @@ public class Lane extends Board {
 
     /* Mutator Methods */
 
+    public void setFrontierCoordinate(Coordinate2D frontierCoordinate) {
+        if (!this.insideBoard(frontierCoordinate)) throw new IllegalArgumentException("Coordinate outside Board!");
+        this.frontierCoordinate = frontierCoordinate;
+    }
+
     public void generate(Function<Board,int[][]> tileIdMatrixFunction) {
         int[][] tileIds = tileIdMatrixFunction.apply(this);
         // PrintUtility.printMatrix(tileIds);
