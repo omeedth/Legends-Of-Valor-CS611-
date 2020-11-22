@@ -148,6 +148,20 @@ public class Board {
 
     /* Logic Methods */
 
+    // Check whether or not the graph contains this specific Tile object with the memory address
+    // TODO: Change this to BFS so that it works on disconnected graphs too!
+    public boolean contains(Tile tile, Set<Class<? extends Tile>> blackListedTileTypes) {
+        List<Tile> tiles = BFS(blackListedTileTypes, (otherTile) -> {
+            return tile == otherTile;
+        });
+        return tiles.get(tiles.size() - 1) == tile; // Check if the memory address of the two Tile objects are the same
+    }
+
+    public List<Tile> getTilesAsList(Set<Class<? extends Tile>> blackListedTileTypes) {
+        // System.out.println("Getting Tiles As List");
+        return BFS(blackListedTileTypes);
+    }
+
     // Coordinate2D of where the piece is on the board right now
     public List<Tile> getPossibleTeleportTiles(Coordinate2D coordinates) {
         // Get all Tile objects in:
@@ -216,20 +230,55 @@ public class Board {
     }
 
     // Get's all disconnected graphs
-    public void BFS(Set<Class<? extends Tile>> blackListedTileTypes) {
+    public List<Tile> BFS(Set<Class<? extends Tile>> blackListedTileTypes) {
+        return BFS(blackListedTileTypes,null);
+        // // Keep track of all visited Tile objects
+        // Set<Tile> visited = new HashSet<Tile>();
+        // List<Tile> exploredTiles = new ArrayList<>();
+
+        // // Go through every Tile in the graph
+        // for (int row = 0; row < this.width; row++) {
+        //     for (int col = 0; col < this.height; col++) {
+        //         Tile startTile = this.get(col,row);
+        //         if (!blackListedTileTypes.contains(startTile.getClass()) && !visited.contains(startTile)) {
+        //             disconnectedGraphs.add(startTile);
+        //             List<Tile> exploredSegmentTiles = bfsHelper(startTile, visited, blackListedTileTypes, null);
+        //             PrintUtility.listToString(exploredSegmentTiles);
+        //             exploredTiles.addAll(exploredSegmentTiles);
+        //         }
+        //     }
+        // }
+
+        // return exploredTiles;
+    }
+
+    // Get's all disconnected graphs
+    public List<Tile> BFS(Set<Class<? extends Tile>> blackListedTileTypes, Function<Tile,Boolean> stopCondition) {
         // Keep track of all visited Tile objects
         Set<Tile> visited = new HashSet<Tile>();
+        List<Tile> exploredTiles = new ArrayList<>();
 
         // Go through every Tile in the graph
-        for (int row = 0; row < this.width; row++) {
-            for (int col = 0; col < this.height; col++) {
+        for (int row = 0; row < this.height; row++) {
+            for (int col = 0; col < this.width; col++) {
                 Tile startTile = this.get(col,row);
                 if (!blackListedTileTypes.contains(startTile.getClass()) && !visited.contains(startTile)) {
                     disconnectedGraphs.add(startTile);
-                    bfsHelper(startTile, visited, blackListedTileTypes, null);
+                    List<Tile> exploredSegmentTiles = bfsHelper(startTile, visited, blackListedTileTypes, stopCondition);
+
+                    /* DEBUGGING */
+                    PrintUtility.listToString(exploredSegmentTiles);
+                    /*-----------*/
+
+                    exploredTiles.addAll(exploredSegmentTiles);
+                    if (stopCondition != null && stopCondition.apply(exploredSegmentTiles.get(exploredSegmentTiles.size() - 1))) {
+                        return exploredTiles;
+                    }                    
                 }
             }
         }
+
+        return exploredTiles;
     }
 
     // Does not work for disconnected graphs
@@ -272,6 +321,7 @@ public class Board {
             // (tileTypes.contains(tile.getClass()) && !avoidTileTypes) || (!tileTypes.contains(tile.getClass()) && avoidTileTypes)
             if (stopCondition != null && stopCondition.apply(tile)) {
                 stopConditionMet = true;
+                System.out.println("Tile: " + tile + ", is the same Tile!");
                 continue;
             }
 

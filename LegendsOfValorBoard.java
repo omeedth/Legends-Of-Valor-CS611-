@@ -8,7 +8,10 @@
 /* External Imports */
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class LegendsOfValorBoard {
     
@@ -115,6 +118,45 @@ public class LegendsOfValorBoard {
 
     public void displayMap() {
         System.out.println(this.toString());
+    }
+
+    public List<Tile> getPossibleTeleportTiles(Tile herotile) {
+        // Get all Tile objects in:
+        //  1. Different Lanes (Only one lane at a time AKA teleporting from TOP to BOT is NOT allowed) TODO: Incomplete
+        //  2. Tile objects the below the farthest point a Hero object has explored in a lane           TODO: Incomplete
+        //  3. Tile objects below ALL monsters or on the same level                                     TODO: Incomplete
+
+        // TODO: add a variables or parameters for if you want to rerun BFS to update the Board info with certain blacklisted tiles
+        Set<Class<? extends Tile>> blackListedTileTypes = new HashSet<>();
+        blackListedTileTypes.add(InaccessibleTile.class);
+
+        List<Tile> possibleTeleportTiles = new ArrayList<>();
+
+        // Go through each Lane
+        for (Lane lane : this.lanes) {
+
+            // The hero is in this lane
+            if (lane.contains(herotile, blackListedTileTypes)) {    // AKA: lane.getHeroes().contains(hero)
+                // System.out.println("Lane: " + lane + " Contains Hero Tile: " + herotile);
+                continue;
+            }
+
+            /* DEBUGGING */
+            // System.out.println("\n");
+            // System.out.println(PrintUtility.listToString(exploredTiles,false));
+            /*-----------*/
+
+            // Otherwise add all the Tile objects in the subgraph as 
+            List<Tile> exploredTiles = lane.getTilesAsList(blackListedTileTypes); // .stream().filter((tile) -> tile.getCoords().getY() <= lane.getFrontierCoordinate().getY()).collect(Collectors.toList())
+            possibleTeleportTiles.addAll(exploredTiles);
+
+        }        
+
+        // TODO: Replace "farthestExplored" with the Hero object's actual farthest explored Coordinate2D
+        // Coordinate2D farthestExplored = new Coordinate2D(0,4); // Hard Coded Variable
+        // return possibleTeleportTiles.stream().filter(tile -> tile.getCoords().getY() <= farthestExplored.getY()).collect(Collectors.toList());
+
+        return possibleTeleportTiles;
     }
 
     @Override

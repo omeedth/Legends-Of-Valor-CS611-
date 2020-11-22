@@ -30,10 +30,11 @@ public class TileFactory {
     /* TODO: Add all values for the concrete Tile objects */
     public static final int PLAIN = 0;
     public static final int INACCESSIBLE = 1;
-    public static final int NEXUS = 2;
-    public static final int BUSH = 3;
-    public static final int CAVE = 4;
-    public static final int KOULOU = 5;
+    public static final int MONSTER_NEXUS = 2;
+    public static final int HERO_NEXUS = 3;
+    public static final int BUSH = 4;
+    public static final int CAVE = 5;
+    public static final int KOULOU = 6;
 
     /* Constructors */
 
@@ -54,7 +55,8 @@ public class TileFactory {
         /* TODO: Add all Tile classes */
         TILES.put(PLAIN, PlainTile.class);
         TILES.put(INACCESSIBLE, InaccessibleTile.class);
-        TILES.put(NEXUS, NexusTile.class);
+        TILES.put(MONSTER_NEXUS, MonsterNexusTile.class);
+        TILES.put(HERO_NEXUS, HeroNexusTile.class);
         TILES.put(BUSH, BushTile.class);
         TILES.put(CAVE, CaveTile.class);
         TILES.put(KOULOU, KoulouTile.class);

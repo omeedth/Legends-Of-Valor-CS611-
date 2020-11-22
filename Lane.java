@@ -8,6 +8,8 @@ import java.util.function.Function;
  */
 
 /* External Imports */
+import java.util.List;
+import java.util.ArrayList;
 
 public class Lane extends Board {
     
@@ -16,12 +18,16 @@ public class Lane extends Board {
 
     /* Data Members */
     private String alias;
+    private List<Hero> heroes;
+    private Coordinate2D frontierCoordinate;
 
     /* Constructors */
 
     public Lane(String alias, int width, int height) {
         super(width,height);     
         this.alias = alias;   
+        this.heroes = new ArrayList<>();
+        this.frontierCoordinate = new Coordinate2D();
     }
 
     public Lane(String alias, int dimensions) {
@@ -37,6 +43,18 @@ public class Lane extends Board {
     }
 
     /* Accessor Methods */
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public List<Hero> getHeroes() {
+        return heroes;
+    }
+
+    public Coordinate2D getFrontierCoordinate() {
+        return frontierCoordinate;
+    }
 
     /* Mutator Methods */
 

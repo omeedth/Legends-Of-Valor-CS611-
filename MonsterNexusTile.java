@@ -1,13 +1,13 @@
 /*
  *  Author: Alex Thomas
  *  Creation Date: 11/22/2020
- *  Purpose: Defines a concrete Hero Nexus Tile
+ *  Purpose: Defines a concrete Monster Nexus Tile
  * 
  */
 
 /* External Imports */
 
-public class HeroNexus extends NexusTile {
+public class MonsterNexusTile extends NexusTile {
     
     /* Static Members */
 
@@ -15,7 +15,7 @@ public class HeroNexus extends NexusTile {
 
     /* Constructors */
 
-    public HeroNexus(Coordinate2D coords) {
+    public MonsterNexusTile(Coordinate2D coords) {
         super(coords);
     }
 
@@ -28,9 +28,8 @@ public class HeroNexus extends NexusTile {
     @Override
     public void interact(Object obj) {
         // TODO: Nexus Code:
-        //          1. (If Hero - run Market code)
-        //          2. Spawn's Heroes
-        //          3. (If Monster - Monsters win)
+        //          1. (If Hero - Heroes Win)
+        //          2. Spawn's Monsters
     }
 
 }
