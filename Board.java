@@ -230,6 +230,11 @@ public class Board {
     }
 
     // Get's all disconnected graphs
+    public List<Tile> BFS() {
+        return BFS(null,null);
+    }
+
+    // Get's all disconnected graphs
     public List<Tile> BFS(Set<Class<? extends Tile>> blackListedTileTypes) {
         return BFS(blackListedTileTypes,null);
         // // Keep track of all visited Tile objects
@@ -262,7 +267,7 @@ public class Board {
         for (int row = 0; row < this.height; row++) {
             for (int col = 0; col < this.width; col++) {
                 Tile startTile = this.get(col,row);
-                if (!blackListedTileTypes.contains(startTile.getClass()) && !visited.contains(startTile)) {
+                if ((blackListedTileTypes == null || !blackListedTileTypes.contains(startTile.getClass())) && !visited.contains(startTile)) {
                     disconnectedGraphs.add(startTile);
                     List<Tile> exploredSegmentTiles = bfsHelper(startTile, visited, blackListedTileTypes, stopCondition);
 
@@ -306,7 +311,7 @@ public class Board {
             Tile tile = toVisit.poll();
 
             // Don't look through blacklisted tiles
-            if (blackListedTileTypes.contains(tile.getClass())) {
+            if (blackListedTileTypes != null && blackListedTileTypes.contains(tile.getClass())) {
                 continue;
             }
 

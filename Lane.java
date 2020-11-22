@@ -1,4 +1,5 @@
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /*
  *  Author: Alex Thomas
@@ -54,6 +55,11 @@ public class Lane extends Board {
 
     public Coordinate2D getFrontierCoordinate() {
         return frontierCoordinate;
+    }
+
+    public List<Tile> getAllNexusTiles() {
+        List<Tile> nexusTiles = this.getTilesAsList(null).stream().filter((tile) -> tile instanceof NexusTile).collect(Collectors.toList());
+        return nexusTiles;
     }
 
     /* Mutator Methods */
