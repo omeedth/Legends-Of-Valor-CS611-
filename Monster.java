@@ -43,6 +43,12 @@ public abstract class Monster extends BattleCharacter{
         else{ attack(enemy);}
     }
     
+    public void move(Board gameBoard){
+        // If current positionY-1 is a valid tile, move
+        if(true){
+            this.position.setY(this.position.getY()-1);
+        }
+    }
     /** Get enemy in nearby area, return Null if no avaliable enemy */
     public Hero getEnemy(Board gameBoard) {
         List<Tile> neighbors = gameBoard.getNeighbors(this.position);
