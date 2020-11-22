@@ -18,7 +18,7 @@ public class PlainTile extends Tile implements Interactable {
     
     /* Static Members */
     public static char TILE_CHAR = ' ';
-    public static double ENCOUNTER_CHANCE = .4;
+    // public static double ENCOUNTER_CHANCE = .4;
 
     /* Data Members */
 

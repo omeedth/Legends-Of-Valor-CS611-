@@ -463,6 +463,56 @@ public class LegendGame extends RpgGame{
 
     /* ADDED - Generate the map for Legends of Valor (Top,Mid,Bot) lanes */
 
+    public int[][] generateTileIdMatrixValor(Board board) {
+
+        // Variables for the matrix of tileIds
+        int w = board.getWidth();
+        int h = board.getHeight();
+        int[][] tileIds = new int[h][w];
+
+        // Make mapping of probabilities for possible tiles
+        // ArrayList<Float> probabilities = new ArrayList<Float>(); // Probabilities of Tiles
+        // probabilities.add(0.2f);
+        // probabilities.add(0.2f);
+        // probabilities.add(0.2f);
+        // probabilities.add(0.4f);
+
+        Map<Integer,Float> probabilityMapping = new HashMap<Integer,Float>();
+        probabilityMapping.put(TileFactory.BUSH,0.2f);
+        probabilityMapping.put(TileFactory.CAVE,0.2f);
+        probabilityMapping.put(TileFactory.KOULOU,0.2f);
+        probabilityMapping.put(TileFactory.PLAIN,0.4f);
+
+        /* Nexus Tile ID */ // TODO: Make MonsterNexus Class and HeroNexus Class
+        int MONSTER_NEXUS_TILE_ID = TileFactory.NEXUS;
+        int HERO_NEXUS_TILE_ID = TileFactory.NEXUS;
+
+        /* Add Monster Nexus at the first row */
+        for (int col = 0; col < w; col++) {
+            tileIds[0][col] = MONSTER_NEXUS_TILE_ID;
+        }
+
+        // Choosing the tile Ids to place in the specific cell
+        for (int row = 1; row < (h-1); row++) {
+            for (int col = 0; col < w; col++) {
+
+                int id = getTileIdFromProbabilityList(probabilityMapping);
+
+                // Assigning the tileId
+                tileIds[row][col] = id;
+                
+            }
+        }
+
+        /* Add Monster Nexus at the first row */
+        for (int col = 0; col < w; col++) {
+            tileIds[h-1][col] = HERO_NEXUS_TILE_ID;
+        }
+
+        return tileIds;
+
+    }
+
     /* Generate Tile ID Matrix */
     // TODO: Generate 3 Lanes (Top, Mid, and Bot) where each lane has randomly
     //       assigned Tiles
@@ -473,7 +523,7 @@ public class LegendGame extends RpgGame{
         // Variables for the matrix of tileIds
         int w = this.world.getWidth();
         int h = this.world.getHeight();
-        int[][] tileIds = new int[w][h];
+        int[][] tileIds = new int[h][w];
 
         // Make mapping of probabilities for possible tiles
         // ArrayList<Float> probabilities = new ArrayList<Float>(); // Probabilities of Tiles
@@ -482,11 +532,11 @@ public class LegendGame extends RpgGame{
         // probabilities.add(0.2f);
         // probabilities.add(0.4f);
 
-        Map<Float,Integer> probabilityMapping = new HashMap<Float,Integer>();
-        probabilityMapping.put(0.2f,TileFactory.BUSH);
-        probabilityMapping.put(0.2f,TileFactory.CAVE);
-        probabilityMapping.put(0.2f,TileFactory.KOULOU);
-        probabilityMapping.put(0.4f,TileFactory.PLAIN);
+        Map<Integer,Float> probabilityMapping = new HashMap<Integer,Float>();
+        probabilityMapping.put(TileFactory.BUSH,0.2f);
+        probabilityMapping.put(TileFactory.CAVE,0.2f);
+        probabilityMapping.put(TileFactory.KOULOU,0.2f);
+        probabilityMapping.put(TileFactory.PLAIN,0.4f);
 
         /* Lane Variables */
         int laneWidth = 2;
@@ -578,6 +628,7 @@ public class LegendGame extends RpgGame{
         for (int col = 0; col < w; col++) {
             tileIds[h-1][col + horizontalOffset] = NEXUS_TILE_ID;
         }
+
         return tileIds;
     }
 

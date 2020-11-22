@@ -1,10 +1,13 @@
+
 /**
  * @author:Zhuyun Chen
  * date: 10/20/12
  * Class represent a Monster
  * Subclass of BattleCharacter
  */
-  
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Monster extends BattleCharacter{
@@ -17,7 +20,7 @@ public abstract class Monster extends BattleCharacter{
     }
     
     Monster(String name, int level,double baseDamage, double defense, double dodgeChance){
-        super(name, level, defense);
+        super(name, level, defense, new Coordinate2D());    // TODO: Add Coordinates to constructor calls for when you are calling super() I ADDED THIS SO MY CODE WILL COMPILE
         this.baseDamage = baseDamage;
         this.dodgeChance = dodgeChance;
     }
@@ -35,14 +38,16 @@ public abstract class Monster extends BattleCharacter{
     public void action(Board gameBoard){
         Hero enemy = this.getEnemy(gameBoard);
         // If no hero, move; If hero nearby, attack
-        if(enemy == null){ move();}
+        Tile dummyTile = gameBoard.get(new Coordinate2D());    // THIS IS SO MY CODE WILL COMPILE
+        if(enemy == null){ move(dummyTile);} // TODO: Pass in argument!
         else{ attack(enemy);}
     }
     
     /** Get enemy in nearby area, return Null if no avaliable enemy */
     public Hero getEnemy(Board gameBoard) {
         List<Tile> neighbors = gameBoard.getNeighbors(this.position);
-        ArrayList<Hero> enemyList = new ArrayList<Monster>();
+        // ArrayList<Hero> enemyList = new ArrayList<Monster>();    // TODO: choose ONE type      
+        ArrayList<Hero> enemyList = null;                         // THIS IS A DUMMY VARIABLE SO MY CODE COMPILES
         for(int i = 0; i < neighbors.size(); i++){
             TileRepresentable piece = neighbors.get(i).getPiece();
             if(piece instanceof Hero){
@@ -58,7 +63,6 @@ public abstract class Monster extends BattleCharacter{
         }else{
             return null;
         }
-        return null; // This was necessary in case nothing was returned in the loops above
     }
     
     /** Attack a hero in battle */

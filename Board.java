@@ -27,7 +27,7 @@ public class Board {
     private int width, height;
 
     // Board Info - TODO: Consider making a class BoardInfo.java to contain all of this info and return those objects
-    public List<Tile> disconnectedGraphs;
+    private List<Tile> disconnectedGraphs;
 
     /* Constructors */
 
@@ -35,7 +35,7 @@ public class Board {
         /* Empty Board */
         this.setWidth(width);
         this.setHeight(height);
-        tiles = new Tile[this.width][this.height];
+        tiles = new Tile[this.height][this.width];
 
         // Initializing BoardInfo Variables
         disconnectedGraphs = new ArrayList<>();
@@ -57,6 +57,10 @@ public class Board {
 
     public int getHeight() {
         return this.height;
+    }
+
+    public List<Tile> getDisconnectedGraphs() {
+        return disconnectedGraphs;
     }
 
     public Tile get(int x, int y) {
@@ -124,7 +128,7 @@ public class Board {
 
     public boolean fillMatrixFromTileIdMatrix(int [][] tileIds) {
         // Dimensions of the two matrices match - Continue
-        if (tileIds != null && this.width == tileIds.length && this.width != 0 && this.height == tileIds[0].length && this.height != 0) {
+        if (tileIds != null && this.height == tileIds.length && this.height != 0 && this.width == tileIds[0].length && this.width != 0) {
             for (int row = 0; row < this.height; row++) {
                 for (int col = 0; col < this.width; col++) {
                     Coordinate2D cartesianCoords = new Coordinate2D(col, row);   // X: col, Y: row
@@ -395,6 +399,13 @@ public class Board {
         if (source.removePiece(obj)) {
             obj.move(destination);
             destination.addPiece(obj);
+
+            // TODO: update the farthestPoint for Heroes
+            if (obj instanceof Hero) {
+                // check if y is bigger than farthest point before
+
+            }
+
         } else {
             throw new IllegalAccessError("This object does not exist on the source tile!");
         }

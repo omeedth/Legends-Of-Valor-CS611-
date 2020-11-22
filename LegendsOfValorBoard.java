@@ -7,6 +7,7 @@
 
 /* External Imports */
 import java.util.List;
+import java.util.function.Function;
 import java.util.ArrayList;
 
 public class LegendsOfValorBoard {
@@ -21,7 +22,7 @@ public class LegendsOfValorBoard {
 
     /* Data Members */
     private List<Lane> lanes;
-    private List<Tile[]> buffers;
+    // private List<Tile[]> buffers;
     private int bufferSize;         // Number of Tile objects in between lanes
     private int bufferTileID;
 
@@ -30,18 +31,18 @@ public class LegendsOfValorBoard {
 
     /* Constructors */
 
-    public LegendsOfValorBoard(int numLanes, int laneWidth, int laneHeight, int sizeBufferBetweenLanes, int bufferTileID) {
+    public LegendsOfValorBoard(int numLanes, int laneWidth, int laneHeight/*, int sizeBufferBetweenLanes*/, int bufferTileID) {
         /* Empty Board */
         this.lanes = new ArrayList<Lane>(numLanes);
         setLaneWidth(laneWidth);
         setLaneHeight(laneHeight);
 
-        this.buffers = new ArrayList<Tile[]>(numLanes - 1);
+        // this.buffers = new ArrayList<Tile[]>(numLanes - 1);
         setBufferTileID(bufferTileID);
     }
 
     public LegendsOfValorBoard() {
-        this(DEFAULT_NUM_LANES, DEFAULT_LANE_WIDTH, DEFAULT_LANE_HEIGHT, DEFAULT_BUFFER_SIZE_BETWEEN_LANES, DEFAULT_BUFFER_TILE_ID);
+        this(DEFAULT_NUM_LANES, DEFAULT_LANE_WIDTH, DEFAULT_LANE_HEIGHT/*, DEFAULT_BUFFER_SIZE_BETWEEN_LANES*/, DEFAULT_BUFFER_TILE_ID);
     }
 
     /* Accessor Methods */
@@ -50,9 +51,9 @@ public class LegendsOfValorBoard {
         return this.lanes;
     }
 
-    public List<Tile[]> getBuffers() {
-        return buffers;
-    }
+    // public List<Tile[]> getBuffers() {
+    //     return buffers;
+    // }
 
     public int getBufferTileID() {
         return bufferTileID;
@@ -87,12 +88,41 @@ public class LegendsOfValorBoard {
         this.laneHeight = laneHeight;
     }
 
+    public void addLane() {
+        Lane l = new Lane(this.laneWidth, this.laneHeight);
+        this.lanes.add(l);
+    }
+
+    public void addLane(Lane l) {
+        this.lanes.add(l);
+    }
+
+    public boolean removeLane(Lane l) {
+        return this.lanes.remove(l);
+    }
+
+    public Lane removeLane(int index) {
+        return this.lanes.remove(index);
+    }
+
+    public void generateAllLanes(Function<Board,int[][]> tileIdMatrixFunction) {
+        for (Lane lane : this.lanes) {
+            lane.generate(tileIdMatrixFunction);
+        }
+    }
+
     /* Logic Methods */
+
+    public void displayMap() {
+        System.out.println(this.toString());
+    }
 
     @Override
     public String toString() {
 
         String res = "";
+
+        // Create LegendsOfValorBoard String
 
         return res;
 

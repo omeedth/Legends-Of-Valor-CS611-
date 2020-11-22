@@ -589,13 +589,13 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     // NOTE: We can just use the move(Tile destination) method for the teleport() and back() methods and pass
     public void teleport(Board board) {
         // TODO: Implement
-        List<Tile> teleportTile = board.getTeleportTile(this.pos); // Use board to find the Tile to teleport to
+        List<Tile> teleportTile = board.getPossibleTeleportTiles(this.getPos()); // Use board to find the Tile to teleport to
         // Display tiles
         for(int i = 0; i < teleportTile.size(); i++){
             System.out.println(i+". "+teleportTile.get(i).getCoords().toString());
         }
         System.out.println("Enter the coordinate you want to teleport to:");
-        int opt = chooseFromList(new Scanner(System.in), teleportTile);
+        int opt = KeyboardInputUtility.chooseFromList(new Scanner(System.in), teleportTile);
         move(teleportTile.get(opt));
     }
 
