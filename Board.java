@@ -83,6 +83,9 @@ public class Board {
     public List<Lane> getLanes() { return this.lanes;}
     public Lane getLane(Coordinate2D pos){ return this.lanes.get(pos.getX()/this.lanes.size());}
     
+    public int getHeight(){return laneHeight;}
+    public int getWidth(){return laneWidth*this.lanes.size();}
+    
     public int getBufferTileID() {
         return bufferTileID;
     }
@@ -133,7 +136,7 @@ public class Board {
         return this.lanes.remove(index);
     }
     
-    public void generateAllLanes(Function<Board,int[][]> tileIdMatrixFunction) {
+    public void generateAllLanes(Function<Lane,int[][]> tileIdMatrixFunction) {
         for (Lane lane : this.lanes) {
             lane.generate(tileIdMatrixFunction);
         }
@@ -298,4 +301,5 @@ public class Board {
         }
         return res;
     }
+
 }

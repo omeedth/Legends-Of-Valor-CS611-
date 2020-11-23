@@ -79,7 +79,7 @@ public class Lane{
         this.frontierY = frontierY;
     }
 
-    public void generate(Function<Board,int[][]> tileIdMatrixFunction) {
+    public void generate(List<Tile> tileList) {
         int[][] tileIds = tileIdMatrixFunction.apply(this);
         // PrintUtility.printMatrix(tileIds);
         boolean dimensionsMatch = this.fillMatrixFromTileIdMatrix(tileIds);
@@ -99,7 +99,6 @@ public class Lane{
             }
             return true;
         }
-        
         // Dimensions don't match
         else {
             return false;

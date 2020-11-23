@@ -73,7 +73,6 @@ public class LegendGame extends RpgGame{
     
     /** Initialize the team */
     public void init(){
-        this.world.generate();
         // Build the team
         System.out.println();
         System.out.println("       Now it is time to build your team!");
@@ -115,8 +114,8 @@ public class LegendGame extends RpgGame{
         /* Generate monster team */
         this.monsterTeam = this.monsterList.generateTeam(3, this.team.getLevel());
         
-        //int[][] tileIds = generateTileIdMatrix();
-        //this.world.fillMatrixFromTileIdMatrix(tileIds);
+        int[][] tileIds = generateTileIdMatrix();
+        this.world.generateAllLanes(generateTileIdMatrixValor);
 
         // TO-DO: PLACE HEROES AND MONSTERS ON NEXUS ON EACH LANE
         // function in lane/board return a list of nexus to place hero/monster
@@ -316,5 +315,67 @@ public class LegendGame extends RpgGame{
                 loop = false;
             }
         }while(loop);
+    }
+    
+    
+        /* Generate Tile ID Matrix For a single Lane */
+        // TODO: Generate a Lane (Top, Mid, and Bot) where each lane has randomly
+        //       assigned Tiles
+        //       NOTE: The first row is the Monster's Nexus, The last row is the Hero's Nexus,
+        //             and there are inaccessible tiles in between each lane
+    public int[][] generateTileIdMatrixValor(Lane board) {
+        
+        int w = board.getWidth();
+        int h = board.getHeight();
+        int[][] tileIds = new int[h][w];
+        
+        Map<Integer,Float> probabilityMapping = new HashMap<Integer,Float>();
+        probabilityMapping.put(TileFactory.BUSH,0.2f);
+        probabilityMapping.put(TileFactory.CAVE,0.2f);
+        probabilityMapping.put(TileFactory.KOULOU,0.2f);
+        probabilityMapping.put(TileFactory.PLAIN,0.4f);
+        
+        /* Nexus Tile ID */
+        int MONSTER_NEXUS_TILE_ID = TileFactory.MONSTER_NEXUS;
+        int HERO_NEXUS_TILE_ID = TileFactory.HERO_NEXUS;
+        
+        /* Add Monster Nexus at the first row */
+        for (int col = 0; col < w; col++) {
+            tileIds[0][col] = MONSTER_NEXUS_TILE_ID;
+        }
+        
+        // Choosing the tile Ids to place in the specific cell
+        for (int row = 1; row < (h-1); row++) {
+            for (int col = 0; col < w; col++) {
+                int id = getTileIdFromProbabilityList(probabilityMapping);
+                // Assigning the tileId
+                tileIds[row][col] = id;
+            }
+        }
+        /* Add Monster Nexus at the first row */
+        for (int col = 0; col < w; col++) {
+            tileIds[h-1][col] = HERO_NEXUS_TILE_ID;
+        }
+        return tileIds;
+    }
+    
+    public int getTileIdFromProbabilityList(Map<Integer,Float> probabilities) {
+        // Variables for choosing the random tile type
+        float rand = (float) Math.random();
+        float currProbabilityThreshold = 0;
+        int id = -1;
+        // Figuring out the tile to place
+        List<Integer> keys = new ArrayList<Integer>(probabilities.keySet());
+        for (Integer probabilitykey : keys) {
+            currProbabilityThreshold += probabilities.get(probabilitykey);
+            if (rand <= currProbabilityThreshold) {
+                id = probabilitykey;
+                break;
+            }
+        }
+        if (id == -1) {
+            id = keys.get(keys.size() - 1);
+        }
+        return id;
     }
 }
