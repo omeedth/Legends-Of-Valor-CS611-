@@ -20,8 +20,8 @@ public class KoulouTile extends Tile implements Interactable {
 
     /* Constructors */
 
-    public KoulouTile(Coordinate2D coords) {
-        super(coords,TILE_CHAR);
+    public KoulouTile(Coordinate2D coords, int laneIndex) {
+        super(coords,TILE_CHAR,laneIndex);
     }
 
     /* Accessor Methods */

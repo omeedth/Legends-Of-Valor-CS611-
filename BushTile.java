@@ -20,8 +20,8 @@ public class BushTile extends Tile implements Interactable {
 
     /* Constructors */
 
-    public BushTile(Coordinate2D coords,int landIndex) {
-        super(coords,TILE_CHAR,landIndex);
+    public BushTile(Coordinate2D coords,int laneIndex) {
+        super(coords,TILE_CHAR,laneIndex);
     }
 
     /* Accessor Methods */

@@ -15,8 +15,8 @@ public class InaccessibleTile extends Tile {
 
     /* Constructors */
 
-    public InaccessibleTile(Coordinate2D coords) {
-        super(coords,TILE_CHAR);
+    public InaccessibleTile(Coordinate2D coords, int laneIndex) {
+        super(coords,TILE_CHAR, laneIndex);
     }
 
     /* Accessor Methods */
