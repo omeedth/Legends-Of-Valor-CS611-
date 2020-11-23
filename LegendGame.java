@@ -13,7 +13,6 @@ public class LegendGame extends RpgGame{
     public static final int BOARD_DIMENSIONS = 8;
 
     /* Data Members */
-    protected Board world;
     protected HeroCollect heroList;
     protected MonsterCollect monsterList;
     
@@ -78,47 +77,27 @@ public class LegendGame extends RpgGame{
         System.out.println("       Now it is time to build your team!");
         System.out.println();
         System.out.println("       There are three types of heroes: Warriors, Sorcerers and Paladins, each with different  favored skills.");
-        System.out.println("       Please note: you may select up to 3 heroes for your team.");
+        System.out.println("       You will select 3 heroes for your team.");
         System.out.println();
         // Add members to team
-        boolean loop = true;
-        do{
-            // Display heros
-            this.heroList.display();
-            // Build team
-            this.team.addMember(this.heroList.selectHero());
-            if(this.team.size() == 3){
-                loop = false;
-            }else{
-                System.out.print("Do you want to select another hero? (Y/y for yes, N/n for no or Q/q to quit game):");
-                Scanner in = new Scanner(System.in);
-                String optKey;
-                boolean innerLoop;
-                do{
-                    optKey = in.nextLine();
-                    innerLoop = false;
-                    if(optKey.equals("Y")||optKey.equals("y")){
-                        continue;
-                    }else if(optKey.equals("N")||optKey.equals("n")){
-                        loop = false;
-                    }else if(optKey.equals("Q")||optKey.equals("q")){
-                        System.exit(0);
-                    }else{
-                        System.out.print("Invalid input, please type Y/y for yes, N/n for no:");
-                        innerLoop = true;
-                    }
-                }while(innerLoop);
-            }
-        }while(loop);
+        for(int i=0;i<3;i++){
+                // Display heros
+                this.heroList.display();
+                // Build team
+                this.team.addMember(this.heroList.selectHero());
+        }
 
         /* Generate monster team */
         this.monsterTeam = this.monsterList.generateTeam(3, this.team.getLevel());
         
+        this.world.addLane();
+        this.world.addLane();
+        this.world.addLane();
         this.world.generateAllLanes((laneBoard) -> this.generateTileIdMatrixValor(laneBoard));
         // TO-DO: PLACE HEROES AND MONSTERS ON NEXUS ON EACH LANE
         // function in lane/board return a list of nexus to place hero/monster
-        this.team.spawn(world.getHeroNexus());
-        this.monsterTeam.spawn(world.getMonsterNexus());
+        this.team.spawn(this.world.getHeroNexus());
+        this.monsterTeam.spawn(this.world.getMonsterNexus());
     }
     
     
@@ -271,7 +250,7 @@ public class LegendGame extends RpgGame{
         
         /* Add Monster Nexus at the first row */
         for (int col = 0; col < w; col++) {
-            tileIds[0][col] = MONSTER_NEXUS_TILE_ID;
+            tileIds[h-1][col] = MONSTER_NEXUS_TILE_ID;
         }
         
         // Choosing the tile Ids to place in the specific cell
@@ -284,7 +263,7 @@ public class LegendGame extends RpgGame{
         }
         /* Add Monster Nexus at the first row */
         for (int col = 0; col < w; col++) {
-            tileIds[h-1][col] = HERO_NEXUS_TILE_ID;
+            tileIds[0][col] = HERO_NEXUS_TILE_ID;
         }
         return tileIds;
     }

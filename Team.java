@@ -49,7 +49,7 @@ public abstract class Team {
         }else{
             for(int i=0;i<nexus.size();i++){
                 BattleCharacter c = (BattleCharacter)this.members.get(i);
-                c.spawn(nexus.get(i).getCoords());
+                c.spawn(nexus.get(i));
             }
         }
     }

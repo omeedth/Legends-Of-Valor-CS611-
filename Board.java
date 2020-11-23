@@ -43,33 +43,34 @@ public class Board {
         this(DEFAULT_LANE_WIDTH, DEFAULT_LANE_HEIGHT/*, DEFAULT_BUFFER_SIZE_BETWEEN_LANES*/, DEFAULT_BUFFER_TILE_ID);
     }
     
+   
     /* Accessor Methods */
+
     public Tile get(int x, int y){
-        // Find the corresponding lane
-        int laneIndex = Math.round(x/this.laneWidth);
-        // Ask lane to return the corresponding tile
-        return(this.lanes.get(laneIndex).get(x%this.laneWidth, y));
+        int laneIndex = x/this.laneWidth;
+        return(this.lanes.get(laneIndex).get(x, y));
     }
     
     public Tile get(Coordinate2D cartesianCoords) {
         return getTile(cartesianCoords.getX(),cartesianCoords.getY());
     }
+
     
     public List<Tile> getNeighbors(Coordinate2D coord){
         int x = coord.getX();
         int y = coord.getY();
-        return this.lanes.get(Math.round(x/this.laneWidth)).getNeighbors(x%this.laneWidth,y);
+        return this.lanes.get(Math.round(x/this.laneWidth)).getNeighbors(x,y);
     }
     
     public ArrayList<HeroNexusTile> getHeroNexus(){
         ArrayList<HeroNexusTile> nexus = new ArrayList<HeroNexusTile>();
-        for(Lane l: this.lanes){ nexus.addAll(l.getHeroNexus());}
+        for(Lane l: this.lanes){ nexus.add(l.getHeroNexus().get(0));}
         return nexus;
     }
     
     public ArrayList<MonsterNexusTile> getMonsterNexus(){
         ArrayList<MonsterNexusTile> nexus = new ArrayList<MonsterNexusTile>();
-        for(Lane l: this.lanes){ nexus.addAll(l.getMonsterNexus());}
+        for(Lane l: this.lanes){ nexus.add(l.getMonsterNexus().get(0));}
         return nexus;
     }
     
@@ -77,6 +78,7 @@ public class Board {
     public Tile getTile(int x, int y) {
         return get(x,y);
     }
+
 
     public Tile getTile(Coordinate2D cartesianCoords) {
         return get(cartesianCoords);

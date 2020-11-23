@@ -3,7 +3,7 @@
  *                Subclass of Character
  */
 
-public abstract class BattleCharacter extends Character {
+public abstract class BattleCharacter extends Character implements TileRepresentable{
 
     protected double HP;
     protected int level;
@@ -30,9 +30,10 @@ public abstract class BattleCharacter extends Character {
     }
 
     // Set original pos of hero
-    public void spawn(Coordinate2D nexus){
-        this.setPos(nexus);
-        this.nexus = nexus;
+    public void spawn(Tile nexus){
+        this.setPos(nexus.getCoords());
+        nexus.addPiece(this);
+        this.nexus = nexus.getCoords();
     }
     
     /** Take action based on rule */
@@ -66,4 +67,6 @@ public abstract class BattleCharacter extends Character {
     public double getHP(){ return this.HP;}
     public int getLevel(){ return this.level;}
     public double getDefense(){ return this.defense;}
+
+    public abstract char represent();
 }

@@ -24,8 +24,8 @@ public class Lane{
     private List<Hero> heroes;
     private int frontierY;
     
-    private List<MonsterNexusTile> monsterNexus;
-    private List<HeroNexusTile> heroNexus;
+    private ArrayList<MonsterNexusTile> monsterNexus;
+    private ArrayList<HeroNexusTile> heroNexus;
     
     private List<Tile> disconnectedGraphs;
 
@@ -41,6 +41,8 @@ public class Lane{
         this.alias = alias;   
         this.heroes = new ArrayList<>();
         this.frontierY = 0;
+        this.monsterNexus = new ArrayList<MonsterNexusTile>();
+        this.heroNexus = new ArrayList<HeroNexusTile>();
     }
 
     public Lane(String alias, int dimensions) {
@@ -56,7 +58,7 @@ public class Lane{
     }
 
     public Tile[][] getTiles() { return this.tiles;}
-    public Tile get(int x, int y){ return this.tiles[x][y];}
+    public Tile get(int x, int y){ return this.tiles[cartesianYToComputerY(y)][x];}
     
     public int getWidth() { return this.width;}
     public int getHeight() { return this.height;}
@@ -65,8 +67,8 @@ public class Lane{
     public List<Hero> getHeroes() { return heroes;}
     public int getFrontierY() { return frontierY;}
     // Get nexus tiles
-    public List<MonsterNexusTile> getMonsterNexus(){ return monsterNexus;}
-    public List<HeroNexusTile> getHeroNexus(){ return heroNexus;}
+    public ArrayList<MonsterNexusTile> getMonsterNexus(){ return monsterNexus;}
+    public ArrayList<HeroNexusTile> getHeroNexus(){ return heroNexus;}
     
     public List<Tile> getDisconnectedGraphs() {
         return disconnectedGraphs;
@@ -95,6 +97,8 @@ public class Lane{
                     Coordinate2D currCoords = cartesianCoordinatesToComputerCoordinates(cartesianCoords);
                     Tile currTile = TileFactory.getTile(tileIds[row][col], currCoords);
                     this.tiles[row][col] = currTile;
+                    if(currTile instanceof MonsterNexusTile){ this.monsterNexus.add((MonsterNexusTile)currTile);}
+                    else if(currTile instanceof HeroNexusTile){ this.heroNexus.add((HeroNexusTile)currTile);}
                 }
             }
             return true;
