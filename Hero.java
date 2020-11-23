@@ -271,13 +271,11 @@ public class Hero extends BattleCharacter implements TileRepresentable {
                     changeArmor();
                 }
             }else if(choice.equals("6")){
-                // TODO: Pass in the tile you want the Player to move to (Not the whole board), call board functions to find the tile to move to
-                Tile destinationTile = null; // Use the board fuctions to figure out which destination tile to move to!
-                move(destinationTile); // Pass in the destinationTile here
+                move(gameBoard);
             }else if(choice.equals("7")){
-                teleport(gameBoard); // Pass in the destinationTile here
+                teleport(gameBoard);
             }else if(choice.equals("8")){
-                back(); // Pass in the destinationTile here
+                back();
             }else{
                 System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
                 loop = true;
@@ -576,44 +574,48 @@ public class Hero extends BattleCharacter implements TileRepresentable {
 
     // Move on the lane
     public void move(Board board) {
-        String moveKey;
+        Lane lane = board.getLane(this.position);
+        int xPos = this.position.getX();
+        int yPos = this.position.getY();
+        
         Scanner in = new Scanner(System.in);
+        String moveKey;
         boolean loop = true;
         do{
             moveKey = in.nextLine();
             if(moveKey.equals("W")||moveKey.equals("w")){
                 Coordinate2D newPos = new Coordinate2D();
-                if(newPos){
+                if(yPos >= lane.getHeight()-1){
                     System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    this.position.setY(this.position.getY()-1);
+                    this.position.setY(yPos+1);
                     loop = false;
                 }
             }else if(moveKey.equals("A")||moveKey.equals("a")){
-                if(teamX <= 0){
-                    System.out.print("Reach left edge of the world, please try a different move:");
+                if(xPos <= 0){
+                    System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    this.position.setX(this.position.getX()-1);
+                    this.position.setX(xPos-1);
                     loop = false;
                 }
             }else if(moveKey.equals("S")||moveKey.equals("s")){
-                if(teamY >= this.world.getHeight()){
-                    System.out.print("Reach bottom edge of the world, please try a different move:");
+                if(yPos >= 0){
+                    System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    this.position.setY(this.position.getY()+1);
+                    this.position.setY(yPos-1);
                     loop = false;
                 }
             }else if(moveKey.equals("D")||moveKey.equals("d")){
-                if(teamX >= this.world.getWidth()){
-                    System.out.print("Reach right edge of the world, please try a different move:");
+                if(xPos >= lane.getWidth()-1){
+                    System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    this.position.setX(this.position.getX()+1);
+                    this.position.setX(xPos+1);
                     loop = false;
                 }
             }else if(moveKey.equals("Q")||moveKey.equals("q")){
                 System.exit(0);
             }else if(moveKey.equals("I")||moveKey.equals("i")){
-                this.team.display();
+                this.display();
                 System.out.print("Please make your move:");
             }else{
                 System.out.print("Invalid input, please use W/A/S/D:");
@@ -621,13 +623,8 @@ public class Hero extends BattleCharacter implements TileRepresentable {
         }while(loop);
     }
 
-    /* Methods To add (Specific to Legends of Valor) */
-
-    // NOTE: We can just use the move(Tile destination) method for the teleport() and back() methods and pass
     public void teleport(Board board) {
-        // TODO: Implement
-        List<Tile> teleportTile = board.getPossibleTeleportTiles(this.getPos()); // Use board to find the Tile to teleport to
-        // Display tiles
+        List<Tile> teleportTile = board.getPossibleTeleportTiles(this.getPos());
         for(int i = 0; i < teleportTile.size(); i++){
             System.out.println(i+". "+teleportTile.get(i).getCoords().toString());
         }
@@ -637,7 +634,6 @@ public class Hero extends BattleCharacter implements TileRepresentable {
     }
 
     public void back() {
-        // TODO: Implement
         this.setPos(this.nexus);
     }
 

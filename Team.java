@@ -43,7 +43,7 @@ public abstract class Team {
     }
     
     /** Spawn each team member on the nexus*/
-    public void spawn(List<NexusTile> nexus){
+    public void spawn(ArrayList<? extends NexusTile> nexus){
         if(nexus.size() != this.members.size()){
             System.out.println("No enough space to spawn!");
         }else{

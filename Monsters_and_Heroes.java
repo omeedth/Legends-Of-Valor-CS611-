@@ -36,7 +36,7 @@ public class Monsters_and_Heroes{
         // LegendWorld world = new LegendWorld();
         // LegendGame game = new LegendGame(world, heroCollect, monsterCollect, market);
         // game.world.generate();
-        Board board = new Board(LegendGame.BOARD_DIMENSIONS);
+        Board board = new Board();
         LegendGame game = new LegendGame(board, heroCollect, monsterCollect, market);
         /*----------------------------------------------*/
         System.out.println("Load finish.");
