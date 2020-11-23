@@ -114,9 +114,7 @@ public class LegendGame extends RpgGame{
         /* Generate monster team */
         this.monsterTeam = this.monsterList.generateTeam(3, this.team.getLevel());
         
-        int[][] tileIds = generateTileIdMatrix();
-        this.world.generateAllLanes(generateTileIdMatrixValor);
-
+        this.world.generateAllLanes((laneBoard) -> this.generateTileIdMatrixValor(laneBoard));
         // TO-DO: PLACE HEROES AND MONSTERS ON NEXUS ON EACH LANE
         // function in lane/board return a list of nexus to place hero/monster
         this.team.spawn(world.getHeroNexus());
@@ -149,82 +147,14 @@ public class LegendGame extends RpgGame{
             // Check if win
             if(this.team.isWin(this.world)){ gameFlag = false;}
             else if(this.monsterTeam.isWin(this.world)){ gameFlag = false;}
-            // NO NEED TO MOVE TEAM: MOVE FOR HERO & MONSTER SHOULD BE HANDLE INDIVIDUALLY
-            /* Move team to new tile pos */
-            // this.move(); // EDITED - I switched to use my performTurn method which should handle movement and tile interaction
-            //this.performTurn();
-            /* Launch event on that tile */
-            // this.event(); // EDITED - I switched to have this be incorporated in the performTurn() method
         }while(gameFlag);
         gameOver();
     }
-    
-    // public void event(){
-    //     // Get curret pos of the team
-    //     int teamX = this.team.getXPos();
-    //     int teamY = this.team.getYPos();
-    //     Tile destTile = this.world.getTile(teamX,teamY); // Modified
-    //     String eSign = destTile.toString();
-    //     // If current tile is a Market, trade
-    //     if(eSign.equals("\u001B[34mM\u001B[0m")){
-    //         System.out.println();
-    //         System.out.println("\u001B[32m You Found a Market. \u001B[0m");
-    //         System.out.println();
-    //         this.trade();
-    //     }else{
-    //         // If current tile is common, encounter a battle with 80% chance
-    //         if(Math.random()<0.80){
-    //             System.out.println();
-    //             System.out.println("\u001B[31m You Encountered a Fight. \u001B[0m");
-    //             System.out.println();
-    //             this.battle();
-    //         }else{
-    //             System.out.println();
-    //             System.out.println("\u001B[35m Nothing Special Happend. \u001B[0m");
-    //             System.out.println();
-    //             this.common();
-    //         }
-    //     }
-    //     // Update change to the world
-    //     // this.world.updateTeamPos(this.team.getXPos(),this.team.getYPos());
-    //     Tile source = new CommonTile(new Coordinate2D());
-    //     this.world.movePiece(this.team, source, destTile);
-    // }
     
     /** Trade in market */
     public void trade(){
         this.market.welcome(this.team);
     }
-    
-    /** Common event when reach empty slot */
-    // public void common(){
-    //     System.out.print("Enter R/r to take a rest, or any other key to continue adventure:");
-    //     Scanner in = new Scanner(System.in);
-    //     String optKey = in.nextLine();
-    //     if(optKey.equals("Q")||optKey.equals("q")){
-    //         System.exit(0);
-    //     }else if(optKey.equals("R")||optKey.equals("r")){
-    //         // Display heros in team
-    //         this.team.display();
-    //         boolean loop = true;
-    //         do{
-    //             System.out.print("Enter Hero ID to view a hero, or C/c to continue adventure:");
-    //             optKey = in.nextLine();
-    //             if(optKey.equals("Q")||optKey.equals("q")){
-    //                 System.exit(0);
-    //             }else if(optKey.matches("\\d+")){
-    //                 int heroId = Integer.parseInt(optKey);
-    //                 if(heroId>0 && heroId<= this.team.size()){
-    //                     this.viewHero((Hero)this.team.getMember(heroId-1));
-    //                 }else{
-    //                     System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
-    //                 }
-    //             }else if(optKey.equals("C")==false && optKey.equals("c")==false){
-    //                 System.out.print("Invalid input, enter Hero ID to view a hero, or C/c to continue adventure:");
-    //             }
-    //         }while(loop);
-    //     }
-    // }
     
     /**
      * Helper function

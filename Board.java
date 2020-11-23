@@ -8,6 +8,7 @@
 /* External Imports */
 import java.util.*;
 import jcolor.*;
+import java.util.function.Function;
 
 public class Board {
 
@@ -63,11 +64,13 @@ public class Board {
     public ArrayList<HeroNexusTile> getHeroNexus(){
         ArrayList<HeroNexusTile> nexus = new ArrayList<HeroNexusTile>();
         for(Lane l: this.lanes){ nexus.addAll(l.getHeroNexus());}
+        return nexus;
     }
     
-    public ArrayList<HeroNexusTile> getMonsterNexus(){
+    public ArrayList<MonsterNexusTile> getMonsterNexus(){
         ArrayList<MonsterNexusTile> nexus = new ArrayList<MonsterNexusTile>();
         for(Lane l: this.lanes){ nexus.addAll(l.getMonsterNexus());}
+        return nexus;
     }
     
     /* Aliases for "get()" methods so it works with preexisting code */

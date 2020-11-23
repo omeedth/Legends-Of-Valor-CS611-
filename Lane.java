@@ -79,13 +79,13 @@ public class Lane{
         this.frontierY = frontierY;
     }
 
-    public void generate(List<Tile> tileList) {
+    public void generate(Function<Lane,int[][]> tileIdMatrixFunction) {
         int[][] tileIds = tileIdMatrixFunction.apply(this);
         // PrintUtility.printMatrix(tileIds);
         boolean dimensionsMatch = this.fillMatrixFromTileIdMatrix(tileIds);
         // System.out.println("Dimensions Match: " + dimensionsMatch);
     }
-    
+
     public boolean fillMatrixFromTileIdMatrix(int [][] tileIds) {
         // Dimensions of the two matrices match - Continue
         if (tileIds != null && this.height == tileIds.length && this.height != 0 && this.width == tileIds[0].length && this.width != 0) {
