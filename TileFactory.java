@@ -74,12 +74,12 @@ public class TileFactory {
      * @param tileName - The name of the Tile you would like to instantiate
      * @return - The Tile object associated with that tile name
      */
-    public static Tile getTile(int tileId, Coordinate2D coords) {
+    public static Tile getTile(int tileId, Coordinate2D coords, int landIndex) {
 
         /* Using the HashMap and Reflection to instantiate objects at runtime */
-        Class<? extends Tile> tile = TILES.getOrDefault(tileId, null);
+        Class<? extends Tile> tile = TILES.getOrDefault(tileId, null, landIndex);
         try {
-            return (tile != null ? tile.getConstructor(Coordinate2D.class).newInstance(coords) : null);
+            return (tile != null ? tile.getConstructor(Coordinate2D.class, int.class).newInstance(coords) : null);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();

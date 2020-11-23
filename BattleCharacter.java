@@ -9,7 +9,7 @@ public abstract class BattleCharacter extends Character implements TileRepresent
     protected int level;
     protected double defense;
     
-    protected Coordinate2D nexus;
+    protected Tile nexus;
    
     /** Default constructor */
     BattleCharacter() {
@@ -31,9 +31,9 @@ public abstract class BattleCharacter extends Character implements TileRepresent
 
     // Set original pos of hero
     public void spawn(Tile nexus){
-        this.setPos(nexus.getCoords());
+        this.setPos(nexus);
         nexus.addPiece(this);
-        this.nexus = nexus.getCoords();
+        this.nexus = nexus;
     }
     
     /** Take action based on rule */

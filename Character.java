@@ -6,7 +6,7 @@
 public abstract class Character{
     
     protected String name;
-    protected Coordinate2D position;
+    protected Tile position;
 
     /* Default constructor */
     Character(){
@@ -27,8 +27,8 @@ public abstract class Character{
     }
     
     /** Get position of the char */
-    public Coordinate2D getPos(){ return this.position;}
-    public void setPos(Coordinate2D position){ this.position = position;}
+    public Tile getPos(){ return this.position;}
+    public void setPos(Tile position){ this.position = position;}
     
     /** Display information of the char */
     public abstract void display();
@@ -37,6 +37,6 @@ public abstract class Character{
     
     /** move char to given tile */
     public void move(Tile destination){
-        this.position = destination.getCoords();
+        this.position = destination;
     }
 }

@@ -19,8 +19,8 @@ public abstract class NexusTile extends Tile {
 
     /* Constructors */
 
-    public NexusTile(Coordinate2D coords) {
-        super(coords,TILE_CHAR);
+    public NexusTile(Coordinate2D coords, int laneIndex) {
+        super(coords,TILE_CHAR, laneIndex);
     }
 
     /* Accessor Methods */

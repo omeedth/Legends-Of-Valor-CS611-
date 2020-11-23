@@ -79,7 +79,7 @@ public class HeroTeam extends Team{
     /** If the position on board is of type Hero nexus, win */
     public boolean isWin(Board gameBoard){
         for(Character c: this.members){
-            if(gameBoard.getTile(c.getPos()) instanceof MonsterNexusTile){
+            if(c.getPos() instanceof MonsterNexusTile){
                 System.out.println("------------ ❈ ❈ ❈ ❈ ❈ ❈ --------------");
                 System.out.println("\u001B[35m Reaches Monster Nexus \u001B[0m");
                 System.out.println("       \u001B[35m HERO WIN \u001B[0m");

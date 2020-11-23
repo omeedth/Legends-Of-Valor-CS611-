@@ -15,8 +15,8 @@ public class MonsterNexusTile extends NexusTile {
 
     /* Constructors */
 
-    public MonsterNexusTile(Coordinate2D coords) {
-        super(coords);
+    public MonsterNexusTile(Coordinate2D coords, int laneIndex) {
+        super(coords, laneIndex);
     }
 
     /* Accessor Methods */

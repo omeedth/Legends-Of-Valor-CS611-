@@ -56,10 +56,10 @@ public class Board {
     }
 
     
-    public List<Tile> getNeighbors(Coordinate2D coord){
-        int x = coord.getX();
-        int y = coord.getY();
-        return this.lanes.get(Math.round(x/this.laneWidth)).getNeighbors(x,y);
+    public List<Tile> getNeighbors(Tile tile){
+        int x = tile.getCoords().getX();
+        int y = tile.getCoords().getY();
+        return this.lanes.get(tile.getLane()).getNeighbors(x,y);
     }
     
     public ArrayList<HeroNexusTile> getHeroNexus(){
@@ -86,7 +86,6 @@ public class Board {
     /* Mutator Methods */
 
     public List<Lane> getLanes() { return this.lanes;}
-    public Lane getLane(Coordinate2D pos){ return this.lanes.get(pos.getX()/this.lanes.size());}
     
     public int getHeight(){return laneHeight;}
     public int getWidth(){return laneWidth*this.lanes.size();}
@@ -142,8 +141,8 @@ public class Board {
     }
     
     public void generateAllLanes(Function<Lane,int[][]> tileIdMatrixFunction) {
-        for (Lane lane : this.lanes) {
-            lane.generate(tileIdMatrixFunction);
+        for (int i=0;i<this.lanes.size();i++){
+            this.lanes.get(i).generate(tileIdMatrixFunction, i);
         }
     }
     
@@ -153,9 +152,9 @@ public class Board {
         System.out.println(this.toString());
     }
     
-    public List<Tile> getPossibleTeleportTiles(Coordinate2D heroPos) {
+    public List<Tile> getPossibleTeleportTiles(Tile heroPos) {
         List<Tile> possibleTile = new ArrayList<Tile>();
-        int heroLane = heroPos.getX()/this.lanes.size();
+        int heroLane = heroPos.getLane();
         if(heroLane<this.lanes.size()-1){
             possibleTile.addAll(this.lanes.get(heroLane+1).getPossibleTeleportTiles());
         }

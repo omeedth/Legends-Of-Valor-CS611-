@@ -273,10 +273,15 @@ public class Hero extends BattleCharacter{
             }else if(choice.equals("6")){
                 move(gameBoard);
                 gameBoard.displayMap();
+                loop = false;
             }else if(choice.equals("7")){
                 teleport(gameBoard);
+                gameBoard.displayMap();
+                loop = false;
             }else if(choice.equals("8")){
                 back();
+                gameBoard.displayMap();
+                loop = false;
             }else{
                 System.out.println("Invalid action, please choose 1.Attack 2.Cast Spell 3.Drink Potion 4.Change Weapon 5.Change Armor 6.Move 7.Teleport 8.Back or I/i to view info:");
                 loop = true;
@@ -575,9 +580,10 @@ public class Hero extends BattleCharacter{
 
     // Move on the lane
     public void move(Board board) {
-        Lane lane = board.getLane(this.position);
-        int xPos = this.position.getX();
-        int yPos = this.position.getY();
+        int i = this.position.getLane();
+        Lane lane = board.getLanes().get(i);
+        int xPos = this.position.getCoords().getX();
+        int yPos = this.position.getCoords().getY();
         System.out.print("Select a move:");
         Scanner in = new Scanner(System.in);
         String moveKey;
@@ -589,32 +595,36 @@ public class Hero extends BattleCharacter{
                 if(yPos <= 0){
                     System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    lane.movePiece(this,lane.get(xPos,yPos),lane.get(xPos,yPos-1));
-                    this.position.setY(yPos-1);
+                    Tile newPos = lane.get(xPos,yPos-1);
+                    lane.movePiece(this,this.position,newPos);
+                    this.position = newPos;
                     loop = false;
                 }
             }else if(moveKey.equals("A")||moveKey.equals("a")){
                 if(xPos <= 0){
                     System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    lane.movePiece(this,lane.get(xPos,yPos),lane.get(xPos-1,yPos));
-                    this.position.setX(xPos-1);
+                    Tile newPos = lane.get(xPos-1,yPos);
+                    lane.movePiece(this,this.position,newPos);
+                    this.position = newPos;
                     loop = false;
                 }
             }else if(moveKey.equals("S")||moveKey.equals("s")){
                 if(yPos >= lane.getHeight()-1){
                     System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    lane.movePiece(this,lane.get(xPos,yPos),lane.get(xPos,yPos+1));
-                    this.position.setY(yPos+1);
+                    Tile newPos = lane.get(xPos,yPos+1);
+                    lane.movePiece(this,this.position,newPos);
+                    this.position = newPos;
                     loop = false;
                 }
             }else if(moveKey.equals("D")||moveKey.equals("d")){
                 if(xPos >= lane.getWidth()-1){
                     System.out.print("Invalid place to move, please try a different move:");
                 }else{
-                    lane.movePiece(this,lane.get(xPos,yPos),lane.get(xPos+1,yPos));
-                    this.position.setX(xPos+1);
+                    Tile newPos = lane.get(xPos+1,yPos);
+                    lane.movePiece(this,this.position,newPos);
+                    this.position = newPos;
                     loop = false;
                 }
             }else if(moveKey.equals("Q")||moveKey.equals("q")){

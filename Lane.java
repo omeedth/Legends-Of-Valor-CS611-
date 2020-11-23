@@ -81,21 +81,21 @@ public class Lane{
         this.frontierY = frontierY;
     }
 
-    public void generate(Function<Lane,int[][]> tileIdMatrixFunction) {
+    public void generate(Function<Lane,int[][]> tileIdMatrixFunction, int laneIndex) {
         int[][] tileIds = tileIdMatrixFunction.apply(this);
         // PrintUtility.printMatrix(tileIds);
-        boolean dimensionsMatch = this.fillMatrixFromTileIdMatrix(tileIds);
+        boolean dimensionsMatch = this.fillMatrixFromTileIdMatrix(tileIds, laneIndex);
         // System.out.println("Dimensions Match: " + dimensionsMatch);
     }
 
-    public boolean fillMatrixFromTileIdMatrix(int [][] tileIds) {
+    public boolean fillMatrixFromTileIdMatrix(int [][] tileIds, int landIndex) {
         // Dimensions of the two matrices match - Continue
         if (tileIds != null && this.height == tileIds.length && this.height != 0 && this.width == tileIds[0].length && this.width != 0) {
             for (int row = 0; row < this.height; row++) {
                 for (int col = 0; col < this.width; col++) {
                     Coordinate2D cartesianCoords = new Coordinate2D(col, row);
                     Coordinate2D currCoords = cartesianCoordinatesToComputerCoordinates(cartesianCoords);
-                    Tile currTile = TileFactory.getTile(tileIds[row][col], currCoords);
+                    Tile currTile = TileFactory.getTile(tileIds[row][col], currCoords, landIndex);
                     this.tiles[row][col] = currTile;
                     if(currTile instanceof MonsterNexusTile){ this.monsterNexus.add((MonsterNexusTile)currTile);}
                     else if(currTile instanceof HeroNexusTile){ this.heroNexus.add((HeroNexusTile)currTile);}

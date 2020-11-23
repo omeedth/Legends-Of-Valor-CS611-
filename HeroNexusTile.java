@@ -15,8 +15,8 @@ public class HeroNexusTile extends NexusTile {
 
     /* Constructors */
 
-    public HeroNexusTile(Coordinate2D coords) {
-        super(coords);
+    public HeroNexusTile(Coordinate2D coords, int laneIndex) {
+        super(coords, laneIndex);
     }
 
     /* Accessor Methods */

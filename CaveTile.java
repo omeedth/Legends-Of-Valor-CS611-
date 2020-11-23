@@ -20,8 +20,8 @@ public class CaveTile extends Tile implements Interactable {
 
     /* Constructors */
 
-    public CaveTile(Coordinate2D coords) {
-        super(coords,TILE_CHAR);
+    public CaveTile(Coordinate2D coords, int landIndex) {
+        super(coords,TILE_CHAR, landIndex);
     }
 
     /* Accessor Methods */

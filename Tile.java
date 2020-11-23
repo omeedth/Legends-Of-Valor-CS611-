@@ -17,6 +17,7 @@ public abstract class Tile {
     /* Data Members */
     private static int counter = 0;     // If we decide to use Singleton Pattern
 
+    private int laneIndex;
     private Coordinate2D coords;
     private List<TileRepresentable> placedPieces;
     private char tileChar;
@@ -24,19 +25,20 @@ public abstract class Tile {
 
     /* Constructors */
 
-    public Tile(Coordinate2D coords, char tileChar) {
+    public Tile(Coordinate2D coords, char tileChar, int laneIndex) {
         this.coords = coords;
         this.tileChar = tileChar;
         this.placedPieces = new ArrayList<TileRepresentable>();
+        this.laneIndex = laneIndex;
     }
 
     // Require all tiles to define coordinates
-    public Tile(Coordinate2D coords) {
-        this(coords,DEFAULT_TILE_CHAR);
+    public Tile(Coordinate2D coords, int laneIndex) {
+        this(coords,DEFAULT_TILE_CHAR,laneIndex);
     }
 
     /* Accessor Methods */
-
+    public int getLane(){ return this.laneIndex;}
     public Coordinate2D getCoords() {
         return this.coords;
     }
