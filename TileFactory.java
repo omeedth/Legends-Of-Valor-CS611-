@@ -77,9 +77,9 @@ public class TileFactory {
     public static Tile getTile(int tileId, Coordinate2D coords, int laneIndex) {
 
         /* Using the HashMap and Reflection to instantiate objects at runtime */
-        Class<? extends Tile> tile = TILES.getOrDefault(tileId, null, laneIndex);
+        Class<? extends Tile> tile = TILES.getOrDefault(tileId, null);
         try {
-            return (tile != null ? tile.getConstructor(Coordinate2D.class, int.class).newInstance(coords) : null);
+            return (tile != null ? tile.getConstructor(Coordinate2D.class, int.class).newInstance(coords, laneIndex) : null);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
