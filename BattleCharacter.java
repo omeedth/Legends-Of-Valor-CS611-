@@ -20,7 +20,6 @@ public abstract class BattleCharacter extends Character implements TileRepresent
     }
    
     /** User defined constructor */
-    // TODO: Either remove this constructor OR add constructor in Character Class with just (String name) as a parameter
     BattleCharacter(String name, int level, double defense) {
         // super();
         super(name); 
@@ -32,7 +31,7 @@ public abstract class BattleCharacter extends Character implements TileRepresent
     // Set original pos of hero
     public void spawn(Tile nexus){
         this.setPos(nexus);
-        nexus.addPiece(this);
+        nexus.addPiece(this);   // Can have multiple monsters on the same Tile - TODO: see how to fix
         this.nexus = nexus;
     }
     

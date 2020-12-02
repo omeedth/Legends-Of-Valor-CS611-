@@ -112,7 +112,8 @@ public class LegendGame extends RpgGame{
                 // Generate new team of monsters
                 MonsterTeam newTeam = this.monsterList.generateTeam(3,this.team.getLevel());
                 // Spawn monsters in new team
-                //newTeam.spawn(nexusList);
+                ArrayList<? extends NexusTile> monsterNexusList = this.world.getMonsterNexus();     // Added so that monsters now have a position
+                newTeam.spawn(monsterNexusList);
                 // Join the new spawned monsters with exist monster
                 this.monsterTeam.joinTeam(newTeam);
                 this.turn = 0;
