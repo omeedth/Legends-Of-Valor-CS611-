@@ -57,7 +57,7 @@ public class Board {
 
     
     public List<Tile> getNeighbors(Tile tile){
-        int x = tile.getCoords().getX();
+        int x = tile.getCoords().getX();    // Can be null (tile) and causes error some times
         int y = tile.getCoords().getY();
         return this.lanes.get(tile.getLane()).getNeighbors(x,y);
     }

@@ -52,7 +52,7 @@ public abstract class Monster extends BattleCharacter{
     }
     /** Get enemy in nearby area, return Null if no avaliable enemy */
     public Hero getEnemy(Board gameBoard) {
-        List<Tile> neighbors = gameBoard.getNeighbors(this.position);
+        List<Tile> neighbors = gameBoard.getNeighbors(this.position);   // this.position is null sometimes
         ArrayList<Hero> enemyList = new ArrayList<Hero>();
         
         for(int i = 0; i < neighbors.size(); i++){

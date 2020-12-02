@@ -152,14 +152,14 @@ public class Lane{
     public List<Tile> getNeighbors(int x,int y) {
         List<Tile> neighbors = new ArrayList<Tile>(4);
 
-        if(y<this.height) neighbors.add(this.get(x,y+1));
+        if(y<this.height-1) neighbors.add(this.get(x,y+1));
         if(y>0) neighbors.add(this.get(x,y-1));
-        if(x<this.width) neighbors.add(this.get(x+1,y));
+        if(x<this.width-1) neighbors.add(this.get(x+1,y));
         if(x>0) neighbors.add(this.get(x-1,y));
         if(x>0 && y>0){neighbors.add(this.get(x-1,y-1));}
-        if(x>0 && y<0){neighbors.add(this.get(x-1,y+1));}
-        if(x<this.width && y>this.height){neighbors.add(this.get(x+1,y-1));}
-        if(x<this.width && y<this.height){neighbors.add(this.get(x+1,y+1));}
+        if(x>0 && y<this.height-1){neighbors.add(this.get(x-1,y+1));}
+        if(x<this.width-1 && y>0){neighbors.add(this.get(x+1,y-1));}
+        if(x<this.width-1 && y<this.height-1){neighbors.add(this.get(x+1,y+1));}
         
         return neighbors;
     }
